@@ -17,6 +17,7 @@
 			<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
 			<a href="${pageContext.request.contextPath}/loadaddmeun">เพิ่มเมนู</a>
 			<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+			<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 			<a href="${pageContext.request.contextPath}/loadregister">ลงทะเบียน</a>
 
 		</div>

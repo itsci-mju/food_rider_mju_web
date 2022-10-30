@@ -19,46 +19,37 @@ try {
 <title>LOGIN</title>
 </head>
 <body>
-	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/login">
 
-		<h1>Login</h1>
+	<%
+	if (err == -1) {
+	%>
+	<div id="myAlert">
+		<strong>Error!</strong> เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง.
+	</div>
+	<%
+	}
+	%>
 
-		<div>
-			<h1>LoginMamber</h1>
+	<div>
+		<form name="frm" method="post"
+			action="${pageContext.request.contextPath}/login">
 			<div>
-				<input type="text" name="Username" value="" placeholder="Username">
+				<input type="text" name="Email" value="" placeholder="Email">
 			</div>
 			<div>
 				<input type="password" name="password" value=""
 					placeholder="password">
 			</div>
 			<div>
-				<button type="Submit" name="button">ตกลง</button>
-				<button type="reset" name="button">ยกเลิก</button>
+				<button type="Submit" name="button">Login</button>
+				<button type="reset" name="button">Cancel</button>
+
 			</div>
-			</td>
-			<td>
-				<h1>LoginRider</h1>
-				<div>
-					<input type="text" name="Username" value="" placeholder="Username">
-				</div>
-				<div>
-					<input type="password" name="password" value=""
-						placeholder="password">
-				</div>
-				<div>
-					<button type="Submit" name="button">ตกลง</button>
-					<button type="reset" name="button">ยกเลิก</button>
-				</div>
+		</form>
+
+		<div>
+			Don't have an account? <a
+				href="${pageContext.request.contextPath}/loadregister">REGISTER</a>
 		</div>
-
-
-	</form>
-
-	<div>
-		Don't have an account? <a
-			href="${pageContext.request.contextPath}/loadregister">REGISTER</a>
-	</div>
 </body>
 </html>
