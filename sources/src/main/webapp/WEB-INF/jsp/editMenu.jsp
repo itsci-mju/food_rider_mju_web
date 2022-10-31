@@ -32,7 +32,7 @@ try {
 
 	<div>
 		<form name="frm" method="post"
-			action="${pageContext.request.contextPath}/login">
+			action="${pageContext.request.contextPath}/">
 			<div>
 				<input type="text" name="Email" value="" placeholder="Email">
 			</div>

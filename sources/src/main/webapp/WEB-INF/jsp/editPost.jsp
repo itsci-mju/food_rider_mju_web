@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/losdposts">
+		action="${pageContext.request.contextPath}/">
 		<h1>ประกาศรับส่งอาหาร</h1>
 		<div>
 			รูปโปรไฟล์ร้านอาหาร *<input type="file" name="profile_pic" id="imgs"

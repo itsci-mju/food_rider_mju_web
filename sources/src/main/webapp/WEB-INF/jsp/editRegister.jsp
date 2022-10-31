@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/mregister">
+		action="${pageContext.request.contextPath}/">
 		<h1>REGISTER</h1>
 		<div>
 			<div>
