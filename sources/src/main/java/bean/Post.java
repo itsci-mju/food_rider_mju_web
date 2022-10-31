@@ -23,7 +23,7 @@ public class Post {
 	private String detail;
 	@Column(nullable = false)
 	private String amount;
-	@Column(length = 100, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String deliveryfee;
 	@Column(length = 200, nullable = false)
 	private String location;

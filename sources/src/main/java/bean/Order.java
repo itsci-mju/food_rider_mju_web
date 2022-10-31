@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Order {
 	@Id
 	private int orID;
-	@Column(length=100 ,nullable = false)
+	@Column(nullable = false)
 	private int orQty;
 	@Column(length=45 ,nullable = false)
 	private String orStatus;

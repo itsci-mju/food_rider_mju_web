@@ -10,7 +10,7 @@ import bean.*;
 
 public class HibernateConnection {
     public static SessionFactory sessionFactory;
-    static String url = "jdbc:mysql://localhost:3307/project?characterEncoding=UTF-8";
+    static String url = "jdbc:mysql://localhost:3306/project?characterEncoding=UTF-8";
     static String uname = "root";
     static String pwd = "1234";
     public static SessionFactory doHibernateConnection(){

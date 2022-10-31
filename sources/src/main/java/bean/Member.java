@@ -16,13 +16,13 @@ public class Member {
 	private String memPhone;
 	@Column(length=100 ,nullable = false)
 	private String memEmail;
-	@Column(length=45 ,nullable = false)
+	@Column(length=200 ,nullable = false)
 	private String memAddress;
 	@Column(length=45 ,nullable = false)
 	private String memFeature;
 	@Column(length=100 ,nullable = false)
 	private String memImageProfile;
-	@Column(length = 100, nullable = false)
+	@Column(length = 45, nullable = false)
 	private String password;
 	public Member() {
 		super();

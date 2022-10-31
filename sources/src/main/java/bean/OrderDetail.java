@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class OrderDetail {
 	@Id
 	private int orderDetailID;
-	@Column(length=100 ,nullable = false)
+	@Column(nullable = false)
 	private double totaPrice;
 	public OrderDetail() {
 		super();

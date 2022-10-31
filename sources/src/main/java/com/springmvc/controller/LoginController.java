@@ -63,7 +63,7 @@ public class LoginController {
 				String imgname = memImageProfile.split("\\.")[1];
 				String imgname2 = ma + "." + imgname;
 
-				Member m = new Member(ma + 1, memName, memPhone, memEmail, memaddress, memFeature, imgname2, password);
+				Member m = new Member(ma + 1, memName, memPhone, memEmail, imgname2,memaddress , memFeature, password);
 				// System.out.println(m.getMemAID()+m.getMemAName()+m.getMemAPhone()+m.getMemAEmail()+m.getMemAaddress()+m.getMemAImageProfile()+m.getApassword());
 
 				erorr = lm.insertMember(m);
