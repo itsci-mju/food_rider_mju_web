@@ -23,7 +23,7 @@ try {
 	<%
 	if (err == -1) {
 	%>
-	<div id="myAlert">
+	<div>
 		<strong>Error!</strong> เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง.
 	</div>
 	<%
@@ -32,7 +32,9 @@ try {
 
 	<div>
 		<form name="frm" method="post"
-			action="${pageContext.request.contextPath}/login">
+			action="${pageContext.request.contextPath}/loginCustomer">
+			<div>
+
 			<div>
 				<input type="text" name="Email" value="" placeholder="Email">
 			</div>
@@ -41,9 +43,9 @@ try {
 					placeholder="password">
 			</div>
 			<div>
-				<input type="radio" id="rider" name="rider" value="MEMBER">
+				<input type="radio" id="rider" name="rider" value="2">
 				  <label for="memner">ผู้ใช้ทั่วไป</label><br>   
-				<input type="radio"id="rider" name="rider" value="Rider">   
+				<input type="radio"id="rider" name="rider" value="3">   
 					<label for="Rider">ไรเดอร์</label><br> 
 			</div>
 			<div>

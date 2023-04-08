@@ -10,6 +10,15 @@
 <body>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/mregister">
+			<div>
+			<a href="${pageContext.request.contextPath}/">หน้าหลัก</a> 
+			<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
+			<a href="${pageContext.request.contextPath}/loadaddmeun">เพิ่มเมนู</a>
+			<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+			<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
+			<a href="${pageContext.request.contextPath}/loadregister">ลงทะเบียน</a>
+			
+			</div>
 		<h1>REGISTER</h1>
 		<div>
 			<div>
@@ -40,9 +49,9 @@
 
 			<div>
 				
-				<input type="radio" id="rider" name="rider" value="MEMBER">
+				<input type="radio" id="rider" name="rider" value="2">
 				  <label for="memner">ผู้ใช้ทั่วไป</label><br>   
-				<input type="radio"id="rider" name="rider" value="Rider">   
+				<input type="radio"id="rider" name="rider" value="3">   
 					<label for="Rider">ไรเดอร์</label><br> 
 			</div>
 
