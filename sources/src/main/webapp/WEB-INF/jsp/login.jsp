@@ -42,18 +42,20 @@ try {
 				<input type="password" name="password" value=""
 					placeholder="password">
 			</div>
-			<div>
+			<!--  <div>
 				<input type="radio" id="rider" name="rider" value="2">
 				  <label for="memner">ผู้ใช้ทั่วไป</label><br>   
 				<input type="radio"id="rider" name="rider" value="3">   
 					<label for="Rider">ไรเดอร์</label><br> 
 			</div>
+			-->
 			<div>
 				<button type="Submit" name="button">เข้าสู่ระบบ</button>
 				<button type="reset" name="button">ยกเลิก</button>
 
 			</div>
 		</form>
+		
 
 		<div>
 			Don't have an account? <a

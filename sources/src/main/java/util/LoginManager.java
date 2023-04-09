@@ -49,74 +49,13 @@ public class LoginManager {
 
 	}
 
-	/*public Member SearchMemberA(String sname, String pw) {
-		Member me = null;
-		ConnectionDB condb = new ConnectionDB();
-		Connection con = condb.getConnection();
-		try {
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM project.member where where memEmail = '" + sname + "'and password = '" + pw
-					+ "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				int memID = rs.getInt(1);
-				String memName = rs.getString(2);
-				String memPhone = rs.getString(3);
-				String memEmail = rs.getString(4);
-				String memAddress = rs.getString(5);
-				String memFeature = rs.getString(6);
-				String memImageProfile = rs.getString(7);
-				String password = rs.getString(8);
-
-				 me = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile,
-						password);
-			
-			}
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return me;
-
-	}
-
-	public List<Member> SearchCustomer() {
-		List<Member> list = new ArrayList<>();
-		ConnectionDB condb = new ConnectionDB();
-		Connection con = condb.getConnection();
-		try {
-			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM project.member";
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				int memID = rs.getInt(1);
-				String memName = rs.getString(2);
-				String memPhone = rs.getString(3);
-				String memEmail = rs.getString(4);
-				String memAddress = rs.getString(5);
-				String memFeature = rs.getString(6);
-				String memImageProfile = rs.getString(7);
-				String password = rs.getString(8);
-				Member s = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile,
-						password);
-				list.add(s);
-			}
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-
-	}*/
-
+	
 public Member verifyLogin(Member mr) {
 		Member m = null;
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			/*String sql = "select * from project.member where memEmail = '" + mr.getMemEmail() + "'and password = '"
-					+ mr.getPassword() + "' and memFeature = '"+ mr.getMemFeature() + "'";*/
 			String sql = "select * from member where memEmail = '"+mr.getMemEmail()+"' and password = '"+mr.getPassword()+"'";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next() && rs.getRow() == 1) {
@@ -137,5 +76,50 @@ public Member verifyLogin(Member mr) {
 		return m;
 
 	}
-
+public List<Member> getCustomer(String memid) {
+	List<Member> list = new ArrayList<>();
+	ConnectionDB condb = new ConnectionDB();
+	Connection con = condb.getConnection();
+	try {
+		Statement stmt = con.createStatement();
+		String sql = "SELECT * FROM project.member where memID like "+memid+"";
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			int memID = rs.getInt(1);
+			String memName = rs.getString(2);
+			String memPhone = rs.getString(3);
+			String memEmail = rs.getString(4);
+			String memAddress = rs.getString(5);
+			String memFeature = rs.getString(6);
+			String memImageProfile = rs.getString(7);
+			String password = rs.getString(8);
+			Member m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password);
+		}
+		con.close();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return list;
 }
+	public int EditProfile(Member pro){
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = " UPDATE project.member SET memImageProfile = '"+pro.getMemImageProfile()+"',memName = '"+pro.getMemName()+"',memEmail = '"+pro.getMemAddress()+"',memPhone = '"+pro.getMemPhone()+"',memFeature = '"+pro.getMemFeature()+"',password= '"+pro.getPassword()+"'" ;
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			return result;
+			}
+			
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;		
+		
+	}
+}
+
+
+
+
