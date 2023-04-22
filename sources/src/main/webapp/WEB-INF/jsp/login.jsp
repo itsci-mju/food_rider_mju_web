@@ -17,49 +17,101 @@ try {
 <head>
 <meta charset="UTF-8">
 <title>LOGIN</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+	background-color: #f2f2f2;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"], input[type="password"] {
+	padding: 10px;
+	margin-bottom: 20px;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 300px;
+	font-size: 16px;
+	color: #555;
+	background-color: #f2f2f2;
+}
+
+input[type="submit"] {
+	padding: 10px 20px;
+	background-color: #4CAF50;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+input[type="submit"]:hover {
+	background-color: #3e8e41;
+}
+
+.link {
+	text-align: center;
+	margin-top: 10px;
+	font-size: 14px;
+	color: #999;
+}
+
+.link a {
+	color: #4CAF50;
+}
+</style>
 </head>
 <body>
-
-	<%
-	if (err == -1) {
-	%>
-	<div>
-		<strong>Error!</strong> เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง.
-	</div>
-	<%
-	}
-	%>
 
 	<div>
 		<form name="frm" method="post"
 			action="${pageContext.request.contextPath}/loginCustomer">
-			<div>
+			<div class="container">
+				<%
+				if (err == -1) {
+				%>
+				<div>
+					<strong class="link">Error!</strong> เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง.
+				</div>
+				<%
+				}
+				%>
+				<form class="form" action="">
+					<h2>Login</h2>
+					<label for="username">Username:</label> <input type="text"
+						id="Email" name="Email" required> <label for="password">Password:</label>
+					<input type="password" id="password" name="password" required>
+					<input type="submit" value="Login">
+					<div class="link">
+						Don't have an account? <a
+							href="${pageContext.request.contextPath}/loadregister">REGISTER</a>
+					</div>
+				</form>
+			</div>
 
-			<div>
-				<input type="text" name="Email" value="" placeholder="Email">
-			</div>
-			<div>
-				<input type="password" name="password" value=""
-					placeholder="password">
-			</div>
-			<!--  <div>
-				<input type="radio" id="rider" name="rider" value="2">
-				  <label for="memner">ผู้ใช้ทั่วไป</label><br>   
-				<input type="radio"id="rider" name="rider" value="3">   
-					<label for="Rider">ไรเดอร์</label><br> 
-			</div>
-			-->
-			<div>
-				<button type="Submit" name="button">เข้าสู่ระบบ</button>
-				<button type="reset" name="button">ยกเลิก</button>
-
-			</div>
 		</form>
-		
-
-		<div>
-			Don't have an account? <a
-				href="${pageContext.request.contextPath}/loadregister">REGISTER</a>
-		</div>
 </body>
 </html>

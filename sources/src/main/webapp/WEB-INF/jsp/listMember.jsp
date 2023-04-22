@@ -4,6 +4,16 @@
 <%@ page import="bean.*, util.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
+Member em = (Member) session.getAttribute("mtCustomer");
+%>
+<%
+/*Member lm = (Member)session.getAttribute("mtCustomer");
+List<Member>lm =(List<Member>)session.getAttribute("mtCustomer");>*/
+LoginManager mn = new LoginManager();
+Member lm = mn.searchMs("Email", "pw");
+System.out.println("32165M" + lm);
+%>
+<%
 Member memFeature = null;
 %>
 <%
@@ -14,19 +24,22 @@ try {
 	memFeature = (Member) session.getAttribute("Customer");
 	String levelstring = memFeature.getMemFeature();
 	level = Integer.parseInt(levelstring);
-	System.out.println("Submit! LEVE = " + level);
+	System.out.println("submit! LEVE = " + level);
+	System.out.println(memFeature.getMemAddress());
+	System.out.println(memFeature.getMemPhone());
 } catch (Exception e) {
-	System.out.println("Ererr! LEVE = " + level);
+	System.out.println("Error! LEVE = " + level);
 	level = 0;
 
 }
 %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ADDPOST</title>
+<title>LISTMEMBER</title>
 <style type="text/css">
 /* CSS for body element */
 body {
@@ -138,7 +151,7 @@ input[type=text], input[type=password], textarea {
 	box-shadow: 0px 0px 5px #ccc;
 }
 
-input[type="reset"] {
+input[type="submit"] {
 	background-color: #6a5acd;
 	color: white;
 	padding: 10px 20px;
@@ -146,15 +159,66 @@ input[type="reset"] {
 	border-radius: 5px;
 	cursor: pointer;
 }
-  button[type="submit"] {
-        background-color: #6a5acd;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      
+
+.file {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+output {
+	width: 100%;
+	min-height: 150px;
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 15px;
+	position: relative;
+	border-radius: 5px;
+}
+
+output .image {
+	height: 150px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	overflow: hidden;
+	position: relative;
+}
+
+output .image img {
+	height: 100%;
+	width: 100%;
+}
+
+output .image span {
+	position: absolute;
+	top: -4px;
+	right: 4px;
+	cursor: pointer;
+	font-size: 22px;
+	color: white;
+}
+
+output .image span:hover {
+	opacity: 0.8;
+}
+
+output .span--hidden {
+	visibility: hidden;
+}
+
+.image-preview {
+	display: block;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border: 5px solid white;
+	margin: 0 auto;
+	background-size: cover;
+	background-position: center;
+}
 </style>
 </head>
 <body>
@@ -180,11 +244,7 @@ input[type="reset"] {
 		}
 		%>
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		<% 
-		if ( level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%} %>
+		
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
@@ -196,43 +256,31 @@ input[type="reset"] {
 	</nav>
 	<br><br>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/losdposts">
-		<h1>ประกาศรับส่งอาหาร</h1>
-		<label for="imgs">รูปโปรไฟล์ร้านอาหาร :</label>
-		<input type="file" name="profile_pic" id="imgs" accept="image/png/gif,image/jpeg/gif"> 
-		<label for="phone">เบอร์โทรศัพท์ :</label>
-		<input type="text" minlength="10" maxlength="10" name="phone" placeholder="เบอร์โทรศัพท์ *" value="<%=memFeature.getMemPhone()%>" id="phone" />
-		<label for="restaurant">ชื่อร้านค้า :</label> 
-		<input type="text" placeholder="ชื่อร้านค้า *" value="" name="restaurant" id="restaurant" /> 
-		<label for="amount">จำนวนคนที่จะส่ง :</label>
-		<select name="amount" id="amount">
-			<option value="select">เลือกจำนวนคน</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
-			<option value="10">10</option>
-		</select> 
-		<label for="postdate">วันที่ :</label> 
-		<input type="date" id="postdate" name="postdate"> 
-		<label for="posttime">เลือกเวลา :</label>
-		<input type="time" id="posttime" name="posttime"> 
-		<label for="deliveryfee">ค่าส่ง :</label>
-		<input type="text" placeholder="ค่าส่ง *" value="" name="deliveryfee" id="deliveryfee" />
-		<label for="detail">หมายเหตุ :</label>
-		<textarea name="detail" rows="4" cols="50" placeholder="หมายเหตุ *" id="detail"></textarea>
-		<label for="location">ที่อยู่ :</label>
-		<textarea name="location" rows="4" cols="50" placeholder="ที่อยู่ *" id="location"></textarea>
+		action="${pageContext.request.contextPath}/delMember">
 
-		<button type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
-		<input type="reset" name="ยกเลิก">
+		<h1>ข้อมูสมาชิก</h1>
+		<!-- class="image-preview" -->
+		
+		<labelfor="image">รูปโปรไฟล์ :</label> 
+		<img class="image-preview" src="./img/<%=memFeature.getMemImageProfile()%>" alt="" /> 
+		<label for="image">ชื่อ :</label>
+		<%=memFeature.getMemName()%>
+		<label for="email">อีเมล :</label>
+		<%=memFeature.getMemEmail()%>
+		<label for="adds">ที่อยู่ :</label>
+		<%=memFeature.getMemAddress()%>
+		<label for="phone">เบอร์โทรศัพท์ :</label>
+		<%=memFeature.getMemPhone()%>
+		<label for="feature">สถานะ :</label>
+		<%=memFeature.getMemFeature()%>
+		<label for="password">รหัสผ่าน :</label>
+		<%=memFeature.getPassword()%>
+
+		<div>
+			<input type="submit" value="บันทึก"
+				OnClick="return validateForm(frm)" />
+		</div>
 
 	</form>
-
 </body>
 </html>

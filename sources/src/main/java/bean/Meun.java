@@ -4,21 +4,25 @@ import javax.persistence.Column;
 
 public class Meun {
 	
-	@Column(length = 200, nullable = false)
+	private int idmeun;
 	private String nameMenu;
-	@Column(nullable = false)
 	private String meunPrice;
 	public Meun() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Meun( String nameMenu, String meunPrice) {
+	public Meun(int idmeun, String nameMenu, String meunPrice) {
 		super();
-		
+		this.idmeun = idmeun;
 		this.nameMenu = nameMenu;
 		this.meunPrice = meunPrice;
 	}
-	
+	public int getIdmeun() {
+		return idmeun;
+	}
+	public void setIdmeun(int idmeun) {
+		this.idmeun = idmeun;
+	}
 	public String getNameMenu() {
 		return nameMenu;
 	}
@@ -31,6 +35,5 @@ public class Meun {
 	public void setMeunPrice(String meunPrice) {
 		this.meunPrice = meunPrice;
 	}
-	
 	
 }

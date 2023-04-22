@@ -36,7 +36,7 @@ public class LoginController {
 		Member m = new Member(0, "", "", memEmail, "", memFeature, "", password);
 		LoginManager lm = new LoginManager();
 		m = lm.verifyLogin(m);
-
+		
 		if (m != null) {
 			session.setAttribute("m", m.getMemEmail());
 			session.setAttribute("Customer", m);
@@ -56,39 +56,6 @@ public class LoginController {
 	 * me.get(0).getMemEmail()); } catch (ArrayIndexOutOfBoundsException e) {
 	 * System.out.println("Error: the array is empty!"); } return "editProfile"; }
 	 */
-
-	@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
-	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
-		int erorr = 0;
-		ModelAndView mav = new ModelAndView("editProfile");
-		if (ServletFileUpload.isMultipartContent(request)) {
-			try {
-			List<FileItem> data = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-			request.setCharacterEncoding("UTF-8");
-			String memImageProfile = request.getParameter("profile_pic");
-			String memName = request.getParameter("name");
-			String memEmail = request.getParameter("email");
-			String memaddress = request.getParameter("adds");
-			String memPhone = request.getParameter("phone");
-			String memFeature = request.getParameter("rider");
-			String password = request.getParameter("password");
-			LoginManager lm = new LoginManager();
-			int ma = lm.getMaxMember();
-			String imgname = memImageProfile.split("\\.")[1];
-			String imgname2 = ma + "." + imgname;
-			Member mr = new Member(ma + 1,memImageProfile,memName,memEmail,memaddress,memPhone,memFeature,password);
-			erorr = lm.EditProfile(mr);
-			String path = request.getSession().getServletContext().getRealPath("/") + "//images//";
-			data.get(0).write(new File(path + File.separator + imgname2));
-		} catch (Exception e) {
-			e.printStackTrace();
-			erorr = -1;
-		}
-		session.setAttribute("errorM", erorr);
-		System.out.println("Member" + erorr);
-	}
-	return mav;
-}
 
 	@RequestMapping(value = "/loadlogout", method = RequestMethod.GET)
 	public String loadlogout(HttpSession session) {
@@ -150,4 +117,102 @@ public class LoginController {
 		return mav;
 	}
 
+	/*@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
+	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
+		int erorr = 0;
+		ModelAndView mav = new ModelAndView("editProfile");
+		if (ServletFileUpload.isMultipartContent(request)) {
+			try {
+				List<FileItem> data = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+				request.setCharacterEncoding("UTF-8");
+				String memImageProfile = new String(data.get(0).get(), StandardCharsets.UTF_8);
+				String memName = new String(data.get(1).get(), StandardCharsets.UTF_8);
+				String memEmail = new String(data.get(2).get(), StandardCharsets.UTF_8);
+				String memaddress = new String(data.get(3).get(), StandardCharsets.UTF_8);
+				String memPhone = new String(data.get(4).get(), StandardCharsets.UTF_8);
+				String memFeature = new String(data.get(5).get(), StandardCharsets.UTF_8);
+				String password = new String(data.get(6).get(), StandardCharsets.UTF_8);
+				LoginManager lm = new LoginManager();
+				int ma = lm.getMaxMember();
+				String s = String.valueOf(ma);
+				String imgname = memImageProfile.split("\\.")[1];
+				String imgname2 = ma + "." + imgname;
+				Member mr = new Member(ma + 1, memImageProfile, memName, memEmail, memaddress, memPhone, memFeature,
+						password);
+				erorr = lm.EditProfile(mr);
+				String path = request.getSession().getServletContext().getRealPath("/") + "//images//";
+				data.get(0).write(new File(path + File.separator + imgname2));
+			} catch (Exception e) {
+				e.printStackTrace();
+				erorr = -1;
+			}
+			mav.addObject("errorM", erorr);
+			session.setAttribute("errorM", erorr);
+			System.out.println("Member" + erorr);
+		}
+		return mav;
+	}*/
+
+	@RequestMapping(value = "/loadUSERS", method = RequestMethod.GET)
+	public String USERSpage(HttpSession session) {
+		LoginManager lm = new LoginManager();
+		List<Member> m = lm.ShowUSERS();
+		session.setAttribute("registerALL", m);
+		return "users";
+	}
+
+
+	
+	@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
+	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
+		int erorr = 0;
+		ModelAndView mav = new ModelAndView("editProfile");
+		if (ServletFileUpload.isMultipartContent(request)) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+				
+				String memName = request.getParameter("memName");
+				String memEmail = request.getParameter("memEmail");
+				String memaddress = request.getParameter("memaddress");
+				String memPhone = request.getParameter("memPhone");
+				String memFeature = request.getParameter("memFeature");
+				String memImageProfile =request.getParameter("memImageProfile");
+				String password = request.getParameter("password");
+				LoginManager lm = new LoginManager();
+				int ma = lm.getMaxMember();
+				String s = String.valueOf(ma);
+				
+				Member mr = new Member(ma + 1, memName , memEmail,memaddress,memPhone , memFeature, memImageProfile,
+						password);
+				erorr = lm.EditProfile(mr);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				erorr = -1;
+			}
+			mav.addObject("errorM", erorr);
+			session.setAttribute("errorM", erorr);
+			System.out.println("Member" + erorr);
+		}
+		return mav;
+	}
+	@RequestMapping(value = "/loaddelMember", method = RequestMethod.GET)
+	public String loadrdelMemberPage() {
+		return "listMember";
+	}
+	@RequestMapping (value="/delMember",method=RequestMethod.GET)
+	public String dodelMember(HttpServletRequest request) {
+	try {
+	request.setCharacterEncoding("UTF-8");
+	}catch(UnsupportedEncodingException e) {
+	e.printStackTrace();
+	}
+	String memID = request.getParameter("memID");
+	System.out.println(memID);
+	LoginManager sm = new LoginManager();
+	int r = sm.deletemember(memID);
+	request.setAttribute("rmember", r);
+	return "index";
+
+	}
 }
