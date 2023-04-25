@@ -4,9 +4,14 @@
 <%@ page import="bean.*, util.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-Member memFeature = null;
+PostManager pm = new PostManager();
+List<Post> list = (List<Post>) session.getAttribute("sp");
 Post postid = null;
 postid = (Post)session.getAttribute("Spost");
+%>
+
+<%
+Member memFeature = null;
 %>
 <%
 int level = 0;
@@ -16,22 +21,22 @@ try {
 	memFeature = (Member) session.getAttribute("Customer");
 	String levelstring = memFeature.getMemFeature();
 	level = Integer.parseInt(levelstring);
-	System.out.println("Submit! LEVE = " + level);
+	System.out.println("submit! LEVE = " + level);
+	System.out.println(memFeature.getMemAddress());
+	System.out.println(memFeature.getMemPhone());
 } catch (Exception e) {
-	System.out.println("Ererr! LEVE = " + level);
+	System.out.println("Error! LEVE = " + level);
 	level = 0;
 
 }
 %>
-<%
-Post p = null ;
-List<Post> list =(List<Post>)session.getAttribute("st"); %>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ADDPOST</title>
+<title>LISTMEMBER</title>
 <style type="text/css">
 /* CSS for body element */
 body {
@@ -51,7 +56,7 @@ body {
 
 form {
 	background-color: white;
-	padding: 60px;
+	padding: 20px;
 	border-radius: 10px;
 	width: 50%;
 	margin: 0 auto;
@@ -86,7 +91,6 @@ label {
 	margin-bottom: 10px;
 	color: #6a5acd;
 	font-weight: bold;
-	text-align: left;
 }
 
 /* CSS for form input fields */
@@ -144,7 +148,7 @@ input[type=text], input[type=password], textarea {
 	box-shadow: 0px 0px 5px #ccc;
 }
 
-input[type="reset"] {
+input[type="submit"] {
 	background-color: #6a5acd;
 	color: white;
 	padding: 10px 20px;
@@ -153,31 +157,65 @@ input[type="reset"] {
 	cursor: pointer;
 }
 
-button[type="submit"] {
-	background-color: #6a5acd;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
+.file {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	opacity: 0;
 	cursor: pointer;
+}
+
+output {
+	width: 100%;
+	min-height: 150px;
 	display: flex;
-	align-items: right
-}
-button[type="reset"] {
-	background-color: #6a5acd;
-	color: white;
-	padding: 10px 20px;
-	border: none;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 15px;
+	position: relative;
 	border-radius: 5px;
-	cursor: pointer;
-	display: flex;
-	align-items: right 
 }
 
+output .image {
+	height: 150px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	overflow: hidden;
+	position: relative;
+}
 
+output .image img {
+	height: 100%;
+	width: 100%;
+}
 
+output .image span {
+	position: absolute;
+	top: -4px;
+	right: 4px;
+	cursor: pointer;
+	font-size: 22px;
+	color: white;
+}
 
+output .image span:hover {
+	opacity: 0.8;
+}
 
+output .span--hidden {
+	visibility: hidden;
+}
+
+.image-preview {
+	display: block;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border: 5px solid white;
+	margin: 0 auto;
+	background-size: cover;
+	background-position: center;
+}
 </style>
 </head>
 <body>
@@ -203,13 +241,7 @@ button[type="reset"] {
 		}
 		%>
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		<%
-		if (level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%
-		}
-		%>
+
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
@@ -222,74 +254,52 @@ button[type="reset"] {
 	<br>
 	<br>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/loadeditPost">
+		action="${pageContext.request.contextPath}/ShowPost">
 
-		<h1>ประกาศรับส่งอาหาร</h1>
-		<%for(Post po : list){%>
-		<table>
+		<h1>ข้อมูสมาชิก</h1>
+		<!-- class="image-preview" -->
+		<%if(list != null){ %>
+		<table style="width: 100%">
+		
 			<tr>
-				<th>
-				<img class="image-preview" src="./img/<%=postid.getProfile_pic() %>" alt="" /> 
-				<label for="imgs">รูปโปรไฟล์ร้านอาหาร :</label> 
-				<input type="file" name="profile_pic" id="imgs"
-					accept="image/png/gif,image/jpeg/gif">
-				</th>
+				<th>รูปโปรไฟล์</th>
+				<th>ชื่อร้านอาหาร</th>
+				<th>เมนู</th>
+				<th>วันที่ส่งอาหาร</th>
+				<th>เวลาส่งอาหาร</th>
+				<th>จำนวนคนส่งอาหาร</th>
+				<th>ค่าส่ง</th>
+				<th>หมายเหตุ</th>
+				<th>ที่อยู่</th>
+			</tr>
+			<%for(Post pt : list ) {%>
 				
-				<th>
-				<label for="restaurant">ชื่อร้านค้า :</label> 
-					<input type="text" placeholder="ชื่อร้านค้า *" value="<%=postid.getRestaurant() %>" name="restaurant"
-					id="restaurant" /> 
-				 <label for="imgs">รูปเมนูอาหาร :</label> 
-				<input type="file" name="meun" id="imgs"
-					accept="image/png/gif,image/jpeg/gif" value="<%=postid.getMeun() %>">
-					
-				<label for="postdate">วันที่ :</label> 
-					<input type="date" id="postdate" name="postdate" value="<%=postid.getPostDate() %>"> 
-				<label for="posttime">เลือกเวลา :</label> 
-					<input type="time" id="posttime"
-					name="posttime" value="<%=postid.getPostTime() %>"> 
-				<label for="amount">จำนวนคนที่จะส่ง :</label> 
-				<select name="amount" id="amount" value="<%=postid.getAmount() %>">
-						<option value="select">เลือกจำนวนคน</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-				</select> <label for="deliveryfee">ค่าส่ง :</label> 
-				<input type="text" placeholder="ค่าส่ง *" value="<%=postid.getDeliveryfee() %>" name="deliveryfee" id="deliveryfee" />
-				</th>
+				<%if(Integer.parseInt(pt.getRestaurant()) > 1 ) {%>
 			<tr>
-				<th><label for="detail">หมายเหตุ :</label> <textarea
-						name="detail" rows="4" cols="50" placeholder="หมายเหตุ *"
-						id="detail" value="<%=postid.getDetail() %>"></textarea></th>
-				<th></th>
-				<th><label for="location">ที่อยู่ :</label> <textarea
-						name="location" rows="4" cols="50" placeholder="ที่อยู่ *"
-						id="location" value="<%=postid.getLocation() %>"></textarea></th>
-			</tr>
-			<tr>
-				<th></th>
+				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
+				<th><%=pt.getRestaurant() %></th>
+				<th><img src="<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
+				<th><%=pt.getPostDate() %></th>
+				<th><%=pt.getPostTime() %></th>
+				<th><%=pt.getAmount() %></th>
+				<th><%=pt.getDeliveryfee() %></th>
+				<th><%=pt.getDetail() %></th>
+				<th><%=pt.getLocation() %></th>
 				<th>
-					<button  type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
+				<a href="${pageContext.request.contextPath}/loadeditPost?postID=<%=pt.getPostID() %>">แก่ไข</a>
+				<a href="${pageContext.request.contextPath}/delPost?postID=<%=pt.getPostID() %>">ลบ</a>
 				</th>
-				<th>
-					<button type="reset" name="button">ยกเลิก</button>
-				</th>
-				<th></th>
 			</tr>
-
+			<%} %>
+		<%} %>
+		
 		</table>
-<%} %>
-
-
+		<%} %>
+		<div>
+			<input type="submit" value="บันทึก"
+				OnClick="return validateForm(frm)" />
+		</div>
 
 	</form>
-
 </body>
 </html>

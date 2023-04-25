@@ -13,41 +13,16 @@ import org.apache.tomcat.jni.Time;
 import bean.*;
 
 public class PostManager {
-	/*
-	 * public String insertPost(Post PO) { ConnectionDB dbcon = new ConnectionDB();
-	 * Connection conn = dbcon.getConnection(); try {
-	 * 
-	 * Statement statment = conn.createStatement();
-	 * statment.execute("insert into project.post values('" + PO.getPostID() + "','"
-	 * + PO.getRestaurant() + "','" + PO.getPostDate() + "','" + PO.getPostTime() +
-	 * "','" + PO.getDetail() + "','" + PO.getAmount() + "','" + PO.getDeliveryfee()
-	 * + "','" + PO.getLocation() + "','" + PO.getProfile() + "'");
-	 * 
-	 * CallableStatement cstmt = (CallableStatement)
-	 * conn.prepareCall("insert into project.post values('" + PO.getPostID() + "','"
-	 * + PO.getPostPhone() + "',,'" + PO.getRestaurant() + "','" + PO.getPostDate()
-	 * + "','" + PO.getPostTime() + "','" + PO.getDetail() + "','" + PO.getAmount()
-	 * + "','" + PO.getDeliveryfee() + "','" + PO.getLocation() + "'");
-	 * cstmt.setInt(1, PO.getPostID()); cstmt.setString(2, PO.getPostPhone());
-	 * cstmt.setString(3, PO.getRestaurant()); cstmt.setString(4, PO.getPostDate());
-	 * cstmt.setString(5, PO.getPostTime()); cstmt.setString(6, PO.getDetail());
-	 * cstmt.setString(7, PO.getAmount()); cstmt.setString(8, PO.getDeliveryfee());
-	 * cstmt.setString(9, PO.getLocation()); boolean result = cstmt.execute();
-	 * conn.close(); if (result == false) { return " ลงทะเบียนสำเร็จ... "; } else {
-	 * return " มีบางอย่างผิดพลาด โปรดลองอีกครั้ง!!! "; } } catch (SQLException e) {
-	 * e.printStackTrace(); } return " มีบางอย่างผิดพลาด โปรดลองอีกครั้ง!!! ";
-	 * 
-	 * }
-	 */
-
 	public int insertPost(Post PO) {
 		try {
 			ConnectionDB dbcon = new ConnectionDB();
 			Connection conn = dbcon.getConnection();
 			Statement statment = conn.createStatement();
-			statment.execute("insert into post values('" + PO.getPostID() + "','" + PO.getRestaurant() + "','"
-					+ PO.getPostDate() + "','" + PO.getPostTime() + "','" + PO.getDetail() + "','" + PO.getAmount()
-					+ "','" + PO.getDeliveryfee() + "','" + PO.getLocation() + "'");
+			statment.execute("insert into project.post values(" + PO.getPostID() + ",'" + PO.getRestaurant() + "','" 
+																+ PO.getMeun() + "','" + PO.getPostDate() + "','" 
+																+ PO.getPostTime() + "','" + PO.getDetail() + "'," 
+																+ PO.getAmount() + "," + PO.getDeliveryfee() + ",'" 
+																+ PO.getLocation()  + "','" + PO.getProfile_pic() + "')");
 			conn.close();
 			return 1;
 		} catch (Exception e) {
@@ -77,79 +52,75 @@ public class PostManager {
 		return result;
 
 	}
-
-	public int insertMeun(Meun m) {
-		try {
-			ConnectionDB dbcon = new ConnectionDB();
-			Connection conn = dbcon.getConnection();
-			Statement statment = conn.createStatement();
-			statment.execute("insert into project.meun values('" + m.getIdmeun() + "','" + m.getNameMenu() + "','"
-					+ m.getMeunPrice() + "')");
-			conn.close();
-			return 1;
-		} catch (Exception e) {
-			return -1;
-		}
-	}
-
-	public int getMaxOrder() {
+	public int EditPost(Post p) {
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
-		Statement stmt = null;
-
-		int result = 0;
 		try {
-			stmt = con.createStatement();
-			String sql = "Select MAX(reportID) from reportorder";
+			Statement stmt = con.createStatement();
+			String sql = " UPDATE project.post SET postID = " + p.getPostID() + ",restaurant = '"+p.getRestaurant()
+												+"',meun = '"+p.getMeun()+"',postDate = '"+p.getPostDate()
+												+"',postTime = '"+p.getPostTime()+"',detail = '"+p.getDetail()
+												+"',amount = "+p.getAmount()+",deliveryfee = "+p.getDeliveryfee()
+												+",location = '"+p.getLocation()+"',profile_pic = '"+p.getProfile_pic()
+												+"'";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			return 1;
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+
+	}
+	public List<Post> Showpost() {
+		List<Post> list = new ArrayList<>();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM project.post  ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				int id = rs.getInt(1);
-				result = id;
+				int postID = rs.getInt(1);
+				String restaurant = rs.getString(2);
+				String meun = rs.getString(3);
+				String postDate = rs.getString(4);
+				String postTime = rs.getString(5);
+				String detail = rs.getString(6);
+				int amount = rs.getInt(7);
+				int deliveryfee = rs.getInt(8);
+				String location = rs.getString(9);
+				String profile_pic = rs.getString(10);
+				Post m = new Post(postID, restaurant, meun, postDate, postTime
+								 ,detail, amount, deliveryfee, location, profile_pic);
+				list.add(m);
 			}
-
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return result;
+		return list;
 
 	}
-
-	public int insertOrder(ReportOrder ro) {
-		try {
-			ConnectionDB dbcon = new ConnectionDB();
-			Connection conn = dbcon.getConnection();
-			Statement statment = conn.createStatement();
-			statment.execute(
-					"insert into reportorder values('" + ro.getReportRemark() + "','" + ro.getQtyFood() + "')");
-			conn.close();
-			return 1;
-		} catch (Exception e) {
-			return -1;
-		}
-	}
-
-	public int getMaxMaun() {
+	public int deletePost(String postID) {
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
-		Statement stmt = null;
-
-		int result = 0;
 		try {
-			stmt = con.createStatement();
-			String sql = "Select MAX(idmeun) from Meun";
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				int id = rs.getInt(1);
-				result = id;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(postID);
+			Statement stmt = con.createStatement();
+			String sql = "delete from project.post where postID = '"+postID+"'";
+			int result = stmt.executeUpdate(sql);
+			con.close();
+			return result;
 		}
 
-		return result;
-
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
+	
 
 }

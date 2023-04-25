@@ -234,7 +234,7 @@ output .span--hidden {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/loadaddmeun">เพิ่มเมนู</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
@@ -253,13 +253,13 @@ output .span--hidden {
 		}
 		%>
 	</nav>
+	<br><br>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadeditProfile">
 
 			<h1>แก่ไขข้อมูส่วนตัว</h1>
 			<!-- class="image-preview" -->
-			<img class="image-preview"
-				src="./img/<%=memFeature.getMemImageProfile()%>" alt="" /> 
+			<img class="image-preview" src="./img/<%=memFeature.getMemImageProfile()%>" alt="" /> 
 				<label for="image">รูปโปรไฟล์ :</label>
 				<input type="file" name="profile_pic" id="imgs" accept="img/jpeg, img/png, img/jpg" value="<%=memFeature.getMemImageProfile() %>" />
 				<label for="image">ชื่อ :</label>

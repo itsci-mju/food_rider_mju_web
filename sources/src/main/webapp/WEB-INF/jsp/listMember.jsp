@@ -4,7 +4,7 @@
 <%@ page import="bean.*, util.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-Member em = (Member) session.getAttribute("mtCustomer");
+List<Member> list = (List<Member>) session.getAttribute("st");
 %>
 <%
 /*Member lm = (Member)session.getAttribute("mtCustomer");
@@ -239,12 +239,12 @@ output .span--hidden {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/loadaddmeun">เพิ่มเมนู</a>
+		<a href="${pageContext.request.contextPath}/loadeditPost">แก่ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		
+
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
@@ -254,28 +254,46 @@ output .span--hidden {
 		}
 		%>
 	</nav>
-	<br><br>
+	<br>
+	<br>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/delMember">
+		action="${pageContext.request.contextPath}/Showmember">
 
 		<h1>ข้อมูสมาชิก</h1>
 		<!-- class="image-preview" -->
+		<%if(list != null){ %>
+		<table style="width: 100%">
 		
-		<labelfor="image">รูปโปรไฟล์ :</label> 
-		<img class="image-preview" src="./img/<%=memFeature.getMemImageProfile()%>" alt="" /> 
-		<label for="image">ชื่อ :</label>
-		<%=memFeature.getMemName()%>
-		<label for="email">อีเมล :</label>
-		<%=memFeature.getMemEmail()%>
-		<label for="adds">ที่อยู่ :</label>
-		<%=memFeature.getMemAddress()%>
-		<label for="phone">เบอร์โทรศัพท์ :</label>
-		<%=memFeature.getMemPhone()%>
-		<label for="feature">สถานะ :</label>
-		<%=memFeature.getMemFeature()%>
-		<label for="password">รหัสผ่าน :</label>
-		<%=memFeature.getPassword()%>
-
+			<tr>
+				<th>รูปโปรไฟล์</th>
+				<th>ชื่อ</th>
+				<th>อีเมล</th>
+				<th>ที่อยู่</th>
+				<th>เบอร์โทรศัพท์</th>
+				<th>สถานะ</th>
+				<th>รหัสผ่าน</th>
+				<th></th>
+			</tr>
+			<%for(Member m : list) {%>
+				
+				<%if(Integer.parseInt(m.getMemFeature()) > 1 ) {%>
+			<tr>
+				<th><%=m.getMemImageProfile() %></th>
+				<th><%=m.getMemName() %></th>
+				<th><%=m.getMemEmail() %></th>
+				<th><%=m.getMemAddress() %></th>
+				<th><%=m.getMemPhone() %></th>
+				<th><%=m.getMemFeature() %></th>
+				<th><%=m.getPassword() %></th>
+				<th>
+				<a href="${pageContext.request.contextPath}/delMember?memID=<%=m.getMemID() %>">ลบ</a>
+				</th>
+			</tr>
+			<%} %>
+		<%} %>
+		
+		</table>
+		<%} %>
 		<div>
 			<input type="submit" value="บันทึก"
 				OnClick="return validateForm(frm)" />

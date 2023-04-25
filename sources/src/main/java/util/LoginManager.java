@@ -130,7 +130,7 @@ public class LoginManager {
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select * from member ";
+			String sql = "SELECT * FROM project.member  ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int memID = rs.getInt(1);
@@ -178,13 +178,13 @@ public class LoginManager {
 		return m;
 
 	}
-	public int deletemember(String rgc2) {
+	public int deletemember(String memId) {
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
-			System.out.println(rgc2);
+			System.out.println(memId);
 			Statement stmt = con.createStatement();
-			String sql = "delete from member where memID Like '" + rgc2 + "'";
+			String sql = "delete from project.member where memID = '"+memId+"'";
 			int result = stmt.executeUpdate(sql);
 			con.close();
 			return result;

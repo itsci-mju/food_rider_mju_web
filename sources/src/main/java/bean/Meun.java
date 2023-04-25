@@ -6,12 +6,12 @@ public class Meun {
 	
 	private int idmeun;
 	private String nameMenu;
-	private String meunPrice;
+	private double meunPrice;
 	public Meun() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Meun(int idmeun, String nameMenu, String meunPrice) {
+	public Meun(int idmeun, String nameMenu, double meunPrice) {
 		super();
 		this.idmeun = idmeun;
 		this.nameMenu = nameMenu;
@@ -29,11 +29,12 @@ public class Meun {
 	public void setNameMenu(String nameMenu) {
 		this.nameMenu = nameMenu;
 	}
-	public String getMeunPrice() {
+	public double getMeunPrice() {
 		return meunPrice;
 	}
-	public void setMeunPrice(String meunPrice) {
+	public void setMeunPrice(double meunPrice) {
 		this.meunPrice = meunPrice;
 	}
+	 
 	
 }

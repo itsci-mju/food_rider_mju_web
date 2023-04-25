@@ -46,17 +46,6 @@ public class LoginController {
 			return "login";
 		}
 	}
-
-	/*
-	 * @RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
-	 * public String loadeditProfile(HttpServletRequest request, Model md,
-	 * HttpSession session) { try { String ef = request.getParameter("memEmail");
-	 * LoginManager lm = new LoginManager(); List<Member> me = lm.getCustomer(ef);
-	 * System.out.println("565656"); session.se5tAttribute("stCustomer",
-	 * me.get(0).getMemEmail()); } catch (ArrayIndexOutOfBoundsException e) {
-	 * System.out.println("Error: the array is empty!"); } return "editProfile"; }
-	 */
-
 	@RequestMapping(value = "/loadlogout", method = RequestMethod.GET)
 	public String loadlogout(HttpSession session) {
 		session.setMaxInactiveInterval(1);
@@ -117,52 +106,6 @@ public class LoginController {
 		return mav;
 	}
 
-	/*@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
-	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
-		int erorr = 0;
-		ModelAndView mav = new ModelAndView("editProfile");
-		if (ServletFileUpload.isMultipartContent(request)) {
-			try {
-				List<FileItem> data = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-				request.setCharacterEncoding("UTF-8");
-				String memImageProfile = new String(data.get(0).get(), StandardCharsets.UTF_8);
-				String memName = new String(data.get(1).get(), StandardCharsets.UTF_8);
-				String memEmail = new String(data.get(2).get(), StandardCharsets.UTF_8);
-				String memaddress = new String(data.get(3).get(), StandardCharsets.UTF_8);
-				String memPhone = new String(data.get(4).get(), StandardCharsets.UTF_8);
-				String memFeature = new String(data.get(5).get(), StandardCharsets.UTF_8);
-				String password = new String(data.get(6).get(), StandardCharsets.UTF_8);
-				LoginManager lm = new LoginManager();
-				int ma = lm.getMaxMember();
-				String s = String.valueOf(ma);
-				String imgname = memImageProfile.split("\\.")[1];
-				String imgname2 = ma + "." + imgname;
-				Member mr = new Member(ma + 1, memImageProfile, memName, memEmail, memaddress, memPhone, memFeature,
-						password);
-				erorr = lm.EditProfile(mr);
-				String path = request.getSession().getServletContext().getRealPath("/") + "//images//";
-				data.get(0).write(new File(path + File.separator + imgname2));
-			} catch (Exception e) {
-				e.printStackTrace();
-				erorr = -1;
-			}
-			mav.addObject("errorM", erorr);
-			session.setAttribute("errorM", erorr);
-			System.out.println("Member" + erorr);
-		}
-		return mav;
-	}*/
-
-	@RequestMapping(value = "/loadUSERS", method = RequestMethod.GET)
-	public String USERSpage(HttpSession session) {
-		LoginManager lm = new LoginManager();
-		List<Member> m = lm.ShowUSERS();
-		session.setAttribute("registerALL", m);
-		return "users";
-	}
-
-
-	
 	@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
 	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
 		int erorr = 0;
@@ -197,11 +140,14 @@ public class LoginController {
 		return mav;
 	}
 	@RequestMapping(value = "/loaddelMember", method = RequestMethod.GET)
-	public String loadrdelMemberPage() {
+	public String loadrdelMemberPage(HttpSession session, HttpServletRequest request) {
+		LoginManager sm = new LoginManager();
+		List<Member> st = sm.ShowUSERS();
+		session.setAttribute("st",st);
 		return "listMember";
 	}
 	@RequestMapping (value="/delMember",method=RequestMethod.GET)
-	public String dodelMember(HttpServletRequest request) {
+	public String dodelMember(HttpServletRequest request,HttpSession session) {
 	try {
 	request.setCharacterEncoding("UTF-8");
 	}catch(UnsupportedEncodingException e) {
@@ -212,7 +158,21 @@ public class LoginController {
 	LoginManager sm = new LoginManager();
 	int r = sm.deletemember(memID);
 	request.setAttribute("rmember", r);
-	return "index";
+	List<Member> st = sm.ShowUSERS();
+	session.setAttribute("st",st);
+	return "listMember";
+}
 
+	
+	@RequestMapping(value = "/Showmember", method = RequestMethod.GET)
+	public String doShowmembe(HttpSession session, HttpServletRequest request) {
+		LoginManager sm = new LoginManager();
+		List<Member> st = sm.ShowUSERS();
+		for(Member m : st) {
+			System.out.println( "ko"+m.getMemID());
+		}
+		
+		session.setAttribute("st",st);
+		return "listMember";
 	}
 }
