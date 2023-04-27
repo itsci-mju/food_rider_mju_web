@@ -6,8 +6,12 @@
 <%
 Member memFeature = null;
 Post postid = null;
-postid = (Post)session.getAttribute("Spost");
+postid = (Post)session.getAttribute("errorM");
+List<Post> lp = (List<Post>)session.getAttribute("sp");
 %>
+<%
+Post p = null ;
+List<Post> list =(List<Post>)session.getAttribute("st"); %>
 <%
 int level = 0;
 %>
@@ -23,9 +27,6 @@ try {
 
 }
 %>
-<%
-Post p = null ;
-List<Post> list =(List<Post>)session.getAttribute("st"); %>
 
 <!DOCTYPE html>
 <html>
@@ -224,9 +225,10 @@ button[type="reset"] {
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadeditPost">
 
-		<h1>ประกาศรับส่งอาหาร</h1>
-		<%for(Post po : list){%>
+		<h1>แก่ไขประกาศรับส่งอาหาร</h1>
+		
 		<table>
+		 <% if(postid != null) { %>
 			<tr>
 				<th>
 				<img class="image-preview" src="./img/<%=postid.getProfile_pic() %>" alt="" /> 
@@ -283,10 +285,8 @@ button[type="reset"] {
 				</th>
 				<th></th>
 			</tr>
-
-		</table>
 <%} %>
-
+		</table>
 
 
 	</form>

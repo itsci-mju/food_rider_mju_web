@@ -3,68 +3,81 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="bean.*, util.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%Member memFeature = null;%>
-<%int level = 0;%>
-<%try {
+<%
+Member memFeature = null;
+%>
+<%
+int level = 0;
+%>
+<%
+try {
 	memFeature = (Member) session.getAttribute("Customer");
 	String levelstring = memFeature.getMemFeature();
 	level = Integer.parseInt(levelstring);
-	System.out.println("Submit! LEVE = " + level);
+	System.out.println("submit! LEVE = " + level);
 } catch (Exception e) {
 	System.out.println("Error! LEVE = " + level);
 	level = 0;
 
-}%>
-<%
-int i = 0;
+}
 %>
 <%
-List<Post> Posts = (List) session.getAttribute("post");
-List<Meun> Meuns = (List) session.getAttribute("meuns");
+List<Post> Post = null;
+%>
+<%
+PostManager sm = new PostManager();
+%>
+<%
+try {
+	Post = sm.Showpost();
+} catch (Exception e) {
+
+}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ORDERFOOD</title>
+<title>ORDER</title>
 <style type="text/css">
 /* CSS for navbar */
-      .navbar {
-        background-color: #8a2be2;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-      }
-        form {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 50%;
-        margin: 0 auto;
-      }
-      /* CSS for navbar links */
-      .navbar a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 16px;
-        margin-right: 10px;
-      }
-      
-      /* CSS for registration form container */
-      .form-container {
-        margin: auto;
-        width: 50%;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 5px #888;
-      }
+.navbar {
+	background-color: #8a2be2;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+}
+
+form {
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 50%;
+	margin: 0 auto;
+}
+/* CSS for navbar links */
+.navbar a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+/* CSS for registration form container */
+.form-container {
+	margin: auto;
+	width: 50%;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px #888;
+}
 </style>
 </head>
 <body>
-<!-- navbar -->
+	<!-- navbar -->
 	<nav class="navbar">
 		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
 		<%
@@ -81,16 +94,18 @@ List<Meun> Meuns = (List) session.getAttribute("meuns");
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/loadaddmeun">เพิ่มเมนู</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		<% 
-		if ( level == 1) {
+		<%
+		if (level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%} %>
+		<%
+		}
+		%>
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
@@ -101,59 +116,8 @@ List<Meun> Meuns = (List) session.getAttribute("meuns");
 		%>
 	</nav>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/losdorders">
-		<%
-		for (Post p : Posts) {
-		%>
-		<%
-		i++;
-		%>
-		<div>
-			<p><%=p.getRestaurant()%></p>
-		</div>
-		<div>
-			<img alt="" src="img/<%=%>" width="250px "
-				height="200px">
-		</div>
-		<div>
-			<p>
-				จำนวน<%=p.getAmount()%>/10
-			</p>
-		</div>
-		<div>
-			<p>
-				ค่าส่ง<%=p.getDeliveryfee()%></p>
-		</div>
-		<%
-		for (Meun m : Meuns) {
-		%>
-		<%
-		i++;
-		%>
-		<div></div>
-		<%
-		}
-		%>
-		<div>
-			<input type="radio" id="transfer" name="transfer" value="Transfer">  
-			<label for="transfer">โอน</label><br>   
-			<input type="radio"id="cash" name="cash" value="Cash">  
-			<label for="Cash">เก็บเงินปลายทาง</label><br>
-		</div>
-		<div><p><%=p.getDetail() %> <%=p.getLocation() %></p></div>
-		<div>
-			หมายเหตุ *
-			<textarea name="detailfood" rows="4" cols="50" placeholder="หมายเหตุ *"
-				id="detailfood"></textarea>
-		</div>
+		action="${pageContext.request.contextPath}/loadmains">
 		
-		<%
-		}
-		%>
-		<div>
-			<input type="submit" value="Register"
-				OnClick="return validateForm(frm)" />
-		</div>
 	</form>
 </body>
 </html>

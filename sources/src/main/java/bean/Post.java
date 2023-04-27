@@ -1,8 +1,4 @@
 package bean;
-
-import java.util.Date;
-import org.apache.tomcat.jni.Time;
-
 public class Post {
 
 	private int postID;

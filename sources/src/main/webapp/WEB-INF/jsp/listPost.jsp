@@ -56,9 +56,9 @@ body {
 
 form {
 	background-color: white;
-	padding: 20px;
+	padding: 50px;
 	border-radius: 10px;
-	width: 50%;
+	width: 80%;
 	margin: 0 auto;
 }
 /* CSS for navbar links */
@@ -274,7 +274,9 @@ output .span--hidden {
 			</tr>
 			<%for(Post pt : list ) {%>
 				
-				<%if(Integer.parseInt(pt.getRestaurant()) > 1 ) {%>
+				
+				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
+    			
 			<tr>
 				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getRestaurant() %></th>
@@ -295,10 +297,7 @@ output .span--hidden {
 		
 		</table>
 		<%} %>
-		<div>
-			<input type="submit" value="บันทึก"
-				OnClick="return validateForm(frm)" />
-		</div>
+		
 
 	</form>
 </body>

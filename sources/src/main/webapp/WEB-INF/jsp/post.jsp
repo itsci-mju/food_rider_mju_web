@@ -83,7 +83,9 @@ label {
 	font-weight: bold;
 	text-align: left;
 }
-
+label[type=Submit1] {
+	text-align:center;
+}
 /* CSS for form input fields */
 input[type=text], input[type=password] {
 	width: 100%;
@@ -265,20 +267,25 @@ button[type="reset"] {
 						name="location" rows="4" cols="50" placeholder="ที่อยู่ *"
 						id="location"></textarea></th>
 			</tr>
-			<tr>
-				<th></th>
-				<th>
-					<button  type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
-				</th>
-				<th>
-					<button type="reset" name="button">ยกเลิก</button>
-				</th>
-				<th></th>
-			</tr>
+			
+				
+				
+				
+			
 
 		</table>
-
-
+<table type="Submit1" >
+<tr>
+<th>
+<button  type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
+</th>
+<th>
+<button type="reset" name="button">ยกเลิก</button>
+</th>
+</tr>
+</table>
+	
+	
 
 
 	</form>

@@ -1,30 +1,17 @@
 package bean;
 
-import java.sql.Time;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-@Entity
-@Table(name = "ReportOrder")
 public class ReportOrder {
-	@Id
+	
 	private int reportID;
-	@Column(nullable = false)
-	private Date reportDate;
-	@Column(nullable = false)
-	private Time reportTime;
-	@Column(length=100 ,nullable = false)
 	private String reportRemark;
-	@Column(nullable = false)
+	private String reportDate;
+	private String reportTime;
 	private int qtyFood;
 	public ReportOrder() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ReportOrder(int reportID, Date reportDate, Time reportTime, String reportRemark, int qtyFood) {
+	public ReportOrder(int reportID, String reportDate, String reportTime, String reportRemark, int qtyFood) {
 		super();
 		this.reportID = reportID;
 		this.reportDate = reportDate;
@@ -38,16 +25,16 @@ public class ReportOrder {
 	public void setReportID(int reportID) {
 		this.reportID = reportID;
 	}
-	public Date getReportDate() {
+	public String getReportDate() {
 		return reportDate;
 	}
-	public void setReportDate(Date reportDate) {
+	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
 	}
-	public Date getReportTime() {
+	public String getReportTime() {
 		return reportTime;
 	}
-	public void setReportTime(Time reportTime) {
+	public void setReportTime(String reportTime) {
 		this.reportTime = reportTime;
 	}
 	public String getReportRemark() {
@@ -62,5 +49,6 @@ public class ReportOrder {
 	public void setQtyFood(int qtyFood) {
 		this.qtyFood = qtyFood;
 	}
+	
 	
 }

@@ -1,14 +1,10 @@
 package com.springmvc.controller;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -83,7 +79,7 @@ public class PostController {
 	@RequestMapping(value = "/loadeditPost", method = RequestMethod.GET)
 	public ModelAndView geteditPost(HttpServletRequest request, Model md, HttpSession session) {
 		int erorr = 0;
-		ModelAndView mav = new ModelAndView("listPost");
+		ModelAndView mav = new ModelAndView("editPost");
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				request.setCharacterEncoding("UTF-8");
@@ -130,7 +126,7 @@ public class PostController {
 		for(Post m : sp) {
 			System.out.println( "ko"+m.getPostID());
 		}
-		session.removeAttribute("Spost");
+		session.removeAttribute("sp");
 		session.setAttribute("sp",sp);
 		return "listPost";
 	}
