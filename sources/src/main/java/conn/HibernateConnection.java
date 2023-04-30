@@ -26,8 +26,6 @@ public class HibernateConnection {
         Configuration cfg = new Configuration()
                             .setProperties(database)
                             .addPackage("bean")
-                            
-                            .addAnnotatedClass(Login.class)
                             .addAnnotatedClass(Member.class)
                             .addAnnotatedClass(Post.class)
                             .addAnnotatedClass(ReportOrder.class)

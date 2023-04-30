@@ -6,7 +6,7 @@
 <%
 Member memFeature = null;
 Post postid = null;
-postid = (Post)session.getAttribute("errorM");
+postid = (Post)session.getAttribute("Epost");
 List<Post> lp = (List<Post>)session.getAttribute("sp");
 %>
 <%
@@ -54,7 +54,7 @@ form {
 	background-color: white;
 	padding: 60px;
 	border-radius: 10px;
-	width: 50%;
+	width: 82%;
 	margin: 0 auto;
 }
 /* CSS for navbar links */
@@ -182,8 +182,9 @@ button[type="reset"] {
 </style>
 </head>
 <body>
-	<!-- navbar -->
+		<!-- navbar -->
 	<nav class="navbar">
+		<div style="text-align: left;">
 		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
 		<%
 		if (level != 0) {
@@ -203,6 +204,8 @@ button[type="reset"] {
 		<%
 		}
 		%>
+		</div>
+		<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
 		<%
 		if (level == 1) {
@@ -215,35 +218,38 @@ button[type="reset"] {
 		<%
 		} else {
 		%>
+		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
+		
 	</nav>
 	<br>
 	<br>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadeditPost">
 
-		<h1>แก่ไขประกาศรับส่งอาหาร</h1>
-		
-		<table>
+		<h1>แก้ไขประกาศรับส่งอาหาร</h1>
+		<div  style="text-align: center;">
+		<table style="text-align: center;">
 		 <% if(postid != null) { %>
 			<tr>
 				<th>
-				<img class="image-preview" src="./img/<%=postid.getProfile_pic() %>" alt="" /> 
-				<label for="imgs">รูปโปรไฟล์ร้านอาหาร :</label> 
+				<img class="image-preview" src="./img/<%=postid.getProfile_pic() %>" alt="" width="200" height="150"/> 
+				<label for="imgs">รูปโปรไฟล์ร้านอาหาร : 
 				<input type="file" name="profile_pic" id="imgs"
 					accept="image/png/gif,image/jpeg/gif">
+				</label>	
 				</th>
 				
 				<th>
-				<label for="restaurant">ชื่อร้านค้า :</label> 
-					<input type="text" placeholder="ชื่อร้านค้า *" value="<%=postid.getRestaurant() %>" name="restaurant"
-					id="restaurant" /> 
-				 <label for="imgs">รูปเมนูอาหาร :</label> 
-				<input type="file" name="meun" id="imgs"
-					accept="image/png/gif,image/jpeg/gif" value="<%=postid.getMeun() %>">
+				<label for="restaurant">ชื่อร้านค้า : <input type="text" placeholder="ชื่อร้านค้า *" value="<%=postid.getRestaurant() %>" name="restaurant"
+					id="restaurant" /> </label>
+				 
+				 <img class="image-preview" src="./img/<%=postid.getMeun() %>" alt="" width="200" height="150"/>
+				<label for="imgs">รูปเมนูอาหาร : <input type="file" name="meun" id="imgs"
+					accept="image/png/gif,image/jpeg/gif" value="<%=postid.getMeun() %>"></label>
 					
 				<label for="postdate">วันที่ :</label> 
 					<input type="date" id="postdate" name="postdate" value="<%=postid.getPostDate() %>"> 
@@ -269,24 +275,28 @@ button[type="reset"] {
 			<tr>
 				<th><label for="detail">หมายเหตุ :</label> <textarea
 						name="detail" rows="4" cols="50" placeholder="หมายเหตุ *"
-						id="detail" value="<%=postid.getDetail() %>"></textarea></th>
+						id="detail" value=""><%=postid.getDetail() %></textarea></th>
 				<th></th>
 				<th><label for="location">ที่อยู่ :</label> <textarea
 						name="location" rows="4" cols="50" placeholder="ที่อยู่ *"
-						id="location" value="<%=postid.getLocation() %>"></textarea></th>
+						id="location" value=""><%=postid.getLocation() %></textarea></th>
 			</tr>
+		
+<%} %>
+		</table>
+		<table>
 			<tr>
-				<th></th>
+				
 				<th>
 					<button  type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
 				</th>
+				
 				<th>
 					<button type="reset" name="button">ยกเลิก</button>
 				</th>
-				<th></th>
 			</tr>
-<%} %>
 		</table>
+		</div>
 
 
 	</form>

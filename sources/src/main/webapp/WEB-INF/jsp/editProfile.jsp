@@ -217,8 +217,9 @@ output .span--hidden {
 </style>
 </head>
 <body>
-<!-- navbar -->
+	<!-- navbar -->
 	<nav class="navbar">
+		<div style="text-align: left;">
 		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
 		<%
 		if (level != 0) {
@@ -238,20 +239,26 @@ output .span--hidden {
 		<%
 		}
 		%>
+		</div>
+		<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		<% 
-		if ( level == 1) {
+		<%
+		if (level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%} %>
+		<%
+		}
+		%>
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
 		%>
+		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
+		
 	</nav>
 	<br><br>
 	<form name="frm" method="post" enctype="multipart/form-data"

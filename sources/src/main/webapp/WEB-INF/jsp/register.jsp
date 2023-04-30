@@ -167,8 +167,9 @@ try {
     </style>
 </head>
 <body>
-	<!-- navbar -->
+		<!-- navbar -->
 	<nav class="navbar">
+		<div style="text-align: left;">
 		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
 		<%
 		if (level != 0) {
@@ -188,16 +189,27 @@ try {
 		<%
 		}
 		%>
+		</div>
+		<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<%
+		if (level == 1) {
+		%>
+		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
+		<%
+		}
+		%>
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {
 		%>
+		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
-	</nav>
+		
+	</nav><br><br>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/mregister">
 
@@ -206,7 +218,7 @@ try {
 			<h1>ลงทะเบียน</h1>
 			<form enctype="multipart/form-data">
 				<div class="image-preview"></div>
-				<label for="imge">รูปโปรไฟล์:</label> 
+				<label for="imge">รูปโปรไฟล์ :</label> 
 				<input type="file" accept="image/jpeg, image/png, image/jpg" name="profile_pic" id="imgs"> 
 				<label for="name">ชื่อ:</label>
 				<input type="text" placeholder="ชื่อ *" value="" name="name" id="name" /> 
@@ -220,8 +232,9 @@ try {
 				<label for="Rider"><input type="radio" id="rider" name="rider" value="3"> ไรเดอร์</label>
 				<label for="rider">รหัสผ่าน:</label>
 				<input type="password" name="password" value="" id="password" placeholder="password"/> 
-				
+				<div style="text-align: center;">
 				<input type="submit" value="Register" OnClick="return validateForm(frm)" />
+				</div>
 			</form>
 		</div>
 

@@ -4,13 +4,6 @@
 <%@ page import="bean.*, util.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-PostManager pm = new PostManager();
-List<Post> list = (List<Post>) session.getAttribute("sp");
-Post postid = null;
-postid = (Post)session.getAttribute("Spost");
-%>
-
-<%
 Member memFeature = null;
 %>
 <%
@@ -22,22 +15,35 @@ try {
 	String levelstring = memFeature.getMemFeature();
 	level = Integer.parseInt(levelstring);
 	System.out.println("submit! LEVE = " + level);
-	System.out.println(memFeature.getMemAddress());
-	System.out.println(memFeature.getMemPhone());
 } catch (Exception e) {
 	System.out.println("Error! LEVE = " + level);
 	level = 0;
 
 }
 %>
-<%LoginManager sm = new LoginManager();
-List<Post> sp = sm.Showindex(); %>
+<%
+PostManager pm = new PostManager();
+List<Post> list = (List<Post>) session.getAttribute("sp");
 
+%>
+<%
+List<Post> Post = null;
+%>
+<%
+PostManager sm = new PostManager();
+%>
+<%
+try {
+	Post = sm.Showpost();
+} catch (Exception e) {
+
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>LISTMEMBER</title>
+<title>ORDER</title>
 <style type="text/css">
 /* CSS for body element */
 body {
@@ -57,9 +63,9 @@ body {
 
 form {
 	background-color: white;
-	padding: 50px;
+	padding: 20px;
 	border-radius: 10px;
-	width: 80%;
+	width: 50%;
 	margin: 0 auto;
 }
 /* CSS for navbar links */
@@ -217,7 +223,23 @@ output .span--hidden {
 	background-size: cover;
 	background-position: center;
 }
+h1 {
+  text-align: center;
+}
+p {
+text-align: center;
+}
 </style>
+<script>
+	function checkOnlyOne(clickedCheckbox) {
+		const checkboxes = document.getElementsByName('fruit');
+		for (let i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i] !== clickedCheckbox) {
+				checkboxes[i].checked = false;
+			}
+		}
+	}
+</script>
 </head>
 <body>
 		<!-- navbar -->
@@ -263,79 +285,26 @@ output .span--hidden {
 		%>
 		
 	</nav>
-	<br>
-	<br>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/ShowPost">
+		action="${pageContext.request.contextPath}/loadorder">
+		<h1>กรุณาเลือกรายการอาหาร</h1>
+		<%if(list != null) {%>
+		<h1><%=list.get(0).getRestaurant() %></h1>
+		<img alt="<%=list.get(0).getMeun() %>" src="" width="200" height="150">
+		<label>จำนวน : <%=list.get(0).getAmount() %></label>
+		<label>ค่าส่ง : <%=list.get(0).getDeliveryfee() %></label>
+		<label> <input type="checkbox" name="fruit" value="transfer"
+			onclick="checkOnlyOne(this)"> โอน
+		</label> <br> <label> <input type="checkbox" name="fruit"
+			value="destination" onclick="checkOnlyOne(this)"> เก็บเงินปลายทาง
+		</label><br>
+		<label>หมายเหตุ</label>
+		<input type="note" name="note" value="หมายเหตุ">
+		<p><%=list.get(0).getLocation() %></p>
 
-		<h1>ข้อมูลโพสต์รัส่งอาหาร</h1>
-		<!-- class="image-preview" -->
-	
-		<%if(sp != null){ %>
-		<table style="width: 100%">
-		
-			<tr>
-				<th>รูปโปรไฟล์</th>
-				<th>ชื่อร้านอาหาร</th>
-				<th>เมนู</th>
-				<th>วันที่ส่งอาหาร</th>
-				<th>เวลาส่งอาหาร</th>
-				<th>จำนวนคนส่งอาหาร</th>
-				<th>ค่าส่ง</th>
-				<th>หมายเหตุ</th>
-				<th>ที่อยู่</th>
-			</tr>
-			<%if(level == 1 ) {%>
-			<%for(Post pt : sp ) {%>
-				
-				
-				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
-    			
-			<tr>
-				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
-				<th><%=pt.getRestaurant() %></th>
-				<th><img src="<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
-				<th><%=pt.getPostDate() %></th>
-				<th><%=pt.getPostTime() %></th>
-				<th><%=pt.getAmount() %></th>
-				<th><%=pt.getDeliveryfee() %></th>
-				<th><%=pt.getDetail() %></th>
-				<th><%=pt.getLocation() %></th>
-				<th>
-				<a href="${pageContext.request.contextPath}/loadeditP?postID=<%=pt.getPostID() %>">แก้ไข</a>
-				<a href="${pageContext.request.contextPath}/delPost?postID=<%=pt.getPostID() %>">ลบ</a>
-				</th>
-			</tr>
-			<%} %>
-		<%} %>
-		<%}else{ %>
-			<%for(Post pt : list ) {%>
-				
-				
-				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
-    			
-			<tr>
-				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
-				<th><%=pt.getRestaurant() %></th>
-				<th><img src="<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
-				<th><%=pt.getPostDate() %></th>
-				<th><%=pt.getPostTime() %></th>
-				<th><%=pt.getAmount() %></th>
-				<th><%=pt.getDeliveryfee() %></th>
-				<th><%=pt.getDetail() %></th>
-				<th><%=pt.getLocation() %></th>
-				<th>
-				<a href="${pageContext.request.contextPath}/loadeditP?postID=<%=pt.getPostID() %>">แก้ไข</a>
-				<a href="${pageContext.request.contextPath}/delPost?postID=<%=pt.getPostID() %>">ลบ</a>
-				</th>
-			</tr>
-			<%} %>
-		<%} %>
-		<%} %>
-		</table>
-		<%} %>
-		
+<%} %>
 
 	</form>
 </body>
+
 </html>

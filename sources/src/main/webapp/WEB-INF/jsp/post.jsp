@@ -48,7 +48,7 @@ form {
 	background-color: white;
 	padding: 60px;
 	border-radius: 10px;
-	width: 50%;
+	width: 80%;
 	margin: 0 auto;
 }
 /* CSS for navbar links */
@@ -81,11 +81,10 @@ label {
 	margin-bottom: 10px;
 	color: #6a5acd;
 	font-weight: bold;
-	text-align: left;
+	
 }
-label[type=Submit1] {
-	text-align:center;
-}
+
+
 /* CSS for form input fields */
 input[type=text], input[type=password] {
 	width: 100%;
@@ -158,8 +157,8 @@ button[type="submit"] {
 	border-radius: 5px;
 	cursor: pointer;
 	display: flex;
-	align-items: right
 }
+
 button[type="reset"] {
 	background-color: #6a5acd;
 	color: white;
@@ -168,53 +167,52 @@ button[type="reset"] {
 	border-radius: 5px;
 	cursor: pointer;
 	display: flex;
-	align-items: right 
 }
-
-
-
-
-
 </style>
 </head>
 <body>
 	<!-- navbar -->
 	<nav class="navbar">
-		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
-		<%
-		if (level != 0) {
-		%>
-		<%
-		if (level == 2 || level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
-		<%
-		}
-		%>
-		<%
-		if (level == 3 || level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
-		<%
-		}
-		%>
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
-		<%
-		if (level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%
-		}
-		%>
-		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
-		<%
-		} else {
-		%>
+		<div style="text-align: left;">
+			<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
+			<%
+			if (level != 0) {
+			%>
+			<%
+			if (level == 2 || level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+			<%
+			}
+			%>
+			<%
+			if (level == 3 || level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
+			<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+			<%
+			}
+			%>
+		</div>
+		<div style="text-align: right;">
+			<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+			<%
+			if (level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
+			<%
+			}
+			%>
+			<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
+			<%
+			} else {
+			%>
+		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
+
 	</nav>
 	<br>
 	<br>
@@ -222,72 +220,69 @@ button[type="reset"] {
 		action="${pageContext.request.contextPath}/losdposts">
 
 		<h1>ประกาศรับส่งอาหาร</h1>
-		<table>
-			<tr>
-				<th><label for="imgs">รูปโปรไฟล์ร้านอาหาร :</label> 
-				<input type="file" name="profile_pic" id="imgs"
-					accept="image/png/gif,image/jpeg/gif">
-				</th>
-				
-				<th>
-				<label for="restaurant">ชื่อร้านค้า :</label> 
-					<input type="text" placeholder="ชื่อร้านค้า *" value="" name="restaurant"
-					id="restaurant" /> 
-				 <label for="imgs">รูปเมนูอาหาร :</label> 
-				<input type="file" name="meun" id="imgs"
-					accept="image/png/gif,image/jpeg/gif">
-					
-				<label for="postdate">วันที่ :</label> 
+		<div style="text-align: center;">
+			<table style="text-align: center;">
+				<tr>
+					<th>
+					<label for="imgs">รูปร้านอาหาร : 
+						<input type="file" name="profile_pic" id="imgs"
+						accept="image/png/gif,image/jpeg/gif">
+					</label>
+					</th>
+
+					<th>
+					<label for="restaurant">ชื่อร้านค้า :</label> 
+					<input type="text" placeholder="ชื่อร้านค้า *" value="" name="restaurant" id="restaurant" /> 
+					<label for="imgs">รูปเมนูอาหาร : 
+					<input type="file" name="meun" id="imgs" accept="image/png/gif,image/jpeg/gif">
+					</label> 
+					<label for="postdate">วันที่ :</label> 
 					<input type="date" id="postdate" name="postdate"> 
-				<label for="posttime">เลือกเวลา :</label> 
-					<input type="time" id="posttime"
-					name="posttime"> 
-				<label for="amount">จำนวนคนที่จะส่ง :</label> 
-				<select name="amount" id="amount">
-						<option value="select">เลือกจำนวนคน</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-				</select> <label for="deliveryfee">ค่าส่ง :</label> 
-				<input type="text" placeholder="ค่าส่ง *" value="" name="deliveryfee" id="deliveryfee" />
-				</th>
-			<tr>
-				<th><label for="detail">หมายเหตุ :</label> <textarea
-						name="detail" rows="4" cols="50" placeholder="หมายเหตุ *"
-						id="detail"></textarea></th>
-				<th></th>
-				<th><label for="location">ที่อยู่ :</label> <textarea
-						name="location" rows="4" cols="50" placeholder="ที่อยู่ *"
-						id="location"></textarea></th>
-			</tr>
-			
-				
-				
-				
-			
+					<label for="posttime">เลือกเวลา :</label>
+					<input type="time" id="posttime" name="posttime"> 
+					<label for="amount">จำนวนคนที่จะส่ง :</label> 
+					<select name="amount" id="amount">
+							<option value="select">เลือกจำนวนคน</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select> <label for="deliveryfee">ค่าส่ง :</label> 
+					<input type="text" placeholder="ค่าส่ง *" value="" name="deliveryfee" id="deliveryfee" />
+					</th>
+				<tr>
+					<th>
+					<label for="detail">หมายเหตุ :</label> 
+					<textarea name="detail" rows="4" cols="50" placeholder="หมายเหตุ *" id="detail"></textarea>
+					</th>
+					<th>
+					</th>
+					<th><label for="location">ที่อยู่ :</label> 
+					<textarea name="location" rows="4" cols="50" placeholder="ที่อยู่ *" id="location"></textarea>
+					</th>
+				</tr>
 
+			</table>
+			</div>
+		
+		<table style="text-align: center;">
+		<tr>
+			<th style="text-align: center;">
+				<button type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
+			</th>
+			<th>
+				<button type="reset" name="button">ยกเลิก</button>
+			</th>
+		</tr>
 		</table>
-<table type="Submit1" >
-<tr>
-<th>
-<button  type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
-</th>
-<th>
-<button type="reset" name="button">ยกเลิก</button>
-</th>
-</tr>
-</table>
-	
-	
-
-
+		
+			
 	</form>
 
 </body>

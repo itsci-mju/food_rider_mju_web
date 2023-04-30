@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import bean.Member;
+import bean.Post;
 
 public class LoginManager {
 
@@ -194,5 +195,37 @@ public class LoginManager {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	public List<Post> Showindex() {
+		List<Post> list = new ArrayList<>();
+		
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM project.post ";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int postID = rs.getInt(1);
+				String restaurant = rs.getString(2);
+				String meun = rs.getString(3);
+				String postDate = rs.getString(4);
+				String postTime = rs.getString(5);
+				String detail = rs.getString(6);
+				int amount = rs.getInt(7);
+				int deliveryfee = rs.getInt(8);
+				String location = rs.getString(9);
+				String profile_pic = rs.getString(10);
+				int member_PostID = rs.getInt(11);
+				Post m = new Post(postID, restaurant, meun, postDate, postTime
+								 ,detail, amount, deliveryfee, location, profile_pic,member_PostID);
+				list.add(m);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 }

@@ -66,7 +66,7 @@ public class LoginController {
 	@RequestMapping(value = "/mregister", method = RequestMethod.POST)
 	public ModelAndView do_register(HttpServletRequest request, HttpSession session) {
 		int erorr = 0;
-		ModelAndView mav = new ModelAndView("index");
+		ModelAndView mav = new ModelAndView("login");
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> data = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -175,4 +175,18 @@ public class LoginController {
 		session.setAttribute("st",st);
 		return "listMember";
 	}
+	
+	@RequestMapping(value = "/Showindex", method = RequestMethod.GET)
+	public String doShowindex(HttpSession session, HttpServletRequest request) {
+		LoginManager sm = new LoginManager();
+		List<Post> sp = sm.Showindex();
+		for(Post m : sp) {
+			System.out.println( "ko"+m.getPostID());
+		}
+		session.removeAttribute("sp");
+		session.setAttribute("sp",sp);
+		return "index";
+	}
+
+	
 }

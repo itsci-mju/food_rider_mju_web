@@ -22,7 +22,7 @@ public class PostManager {
 																+ PO.getMeun() + "','" + PO.getPostDate() + "','" 
 																+ PO.getPostTime() + "','" + PO.getDetail() + "'," 
 																+ PO.getAmount() + "," + PO.getDeliveryfee() + ",'" 
-																+ PO.getLocation()  + "','" + PO.getProfile_pic() + "')");
+																+ PO.getLocation()  + "','" + PO.getProfile_pic() + "','" + PO.getMember_PostID() + "')");
 			conn.close();
 			return 1;
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class PostManager {
 												+"',postTime = '"+p.getPostTime()+"',detail = '"+p.getDetail()
 												+"',amount = "+p.getAmount()+",deliveryfee = "+p.getDeliveryfee()
 												+",location = '"+p.getLocation()+"',profile_pic = '"+p.getProfile_pic()
-												+"'";
+												+"',member_PostID = " + p.getMember_PostID() + "";
 			int result = stmt.executeUpdate(sql);
 			con.close();
 			return 1;
@@ -74,13 +74,14 @@ public class PostManager {
 		return -1;
 
 	}
-	public List<Post> Showpost() {
+	public List<Post> Showpost(int id) {
 		List<Post> list = new ArrayList<>();
+		
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM project.post  ";
+			String sql = "SELECT * FROM project.post where member_PostID = "+id+" ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int postID = rs.getInt(1);
@@ -93,8 +94,9 @@ public class PostManager {
 				int deliveryfee = rs.getInt(8);
 				String location = rs.getString(9);
 				String profile_pic = rs.getString(10);
+				int member_PostID = rs.getInt(11);
 				Post m = new Post(postID, restaurant, meun, postDate, postTime
-								 ,detail, amount, deliveryfee, location, profile_pic);
+								 ,detail, amount, deliveryfee, location, profile_pic,member_PostID);
 				list.add(m);
 			}
 			con.close();
@@ -121,6 +123,35 @@ public class PostManager {
 		}
 		return -1;
 	}
-	
+	public Post getpost(String id) {
+		Post m = new Post();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "SELECT * FROM project.post where PostID = "+id+" ";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int postID = rs.getInt(1);
+				String restaurant = rs.getString(2);
+				String meun = rs.getString(3);
+				String postDate = rs.getString(4);
+				String postTime = rs.getString(5);
+				String detail = rs.getString(6);
+				int amount = rs.getInt(7);
+				int deliveryfee = rs.getInt(8);
+				String location = rs.getString(9);
+				String profile_pic = rs.getString(10);
+				int member_PostID = rs.getInt(11);
+				m = new Post(postID, restaurant, meun, postDate, postTime
+								 ,detail, amount, deliveryfee, location, profile_pic,member_PostID);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return m;
+
+	}
 
 }

@@ -11,12 +11,13 @@ public class Post {
 	private int deliveryfee;
 	private String location;
 	private String profile_pic;
+	private int member_PostID;
 	public Post() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Post(int postID, String restaurant, String meun, String postDate, String postTime, String detail, int amount,
-			int deliveryfee, String location, String profile_pic) {
+			int deliveryfee, String location, String profile_pic, int member_PostID) {
 		super();
 		this.postID = postID;
 		this.restaurant = restaurant;
@@ -28,6 +29,7 @@ public class Post {
 		this.deliveryfee = deliveryfee;
 		this.location = location;
 		this.profile_pic = profile_pic;
+		this.member_PostID = member_PostID;
 	}
 	public int getPostID() {
 		return postID;
@@ -88,6 +90,12 @@ public class Post {
 	}
 	public void setProfile_pic(String profile_pic) {
 		this.profile_pic = profile_pic;
+	}
+	public int getMember_PostID() {
+		return member_PostID;
+	}
+	public void setMember_PostID(int member_PostID) {
+		this.member_PostID = member_PostID;
 	}
 	
 }

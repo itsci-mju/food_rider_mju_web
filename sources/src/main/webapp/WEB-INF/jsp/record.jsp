@@ -176,8 +176,9 @@ button[type="reset"] {
 </style>
 </head>
 <body>
-	<!-- navbar -->
+		<!-- navbar -->
 	<nav class="navbar">
+		<div style="text-align: left;">
 		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
 		<%
 		if (level != 0) {
@@ -197,6 +198,8 @@ button[type="reset"] {
 		<%
 		}
 		%>
+		</div>
+		<div style="text-align: right;">
 		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
 		<%
 		if (level == 1) {
@@ -209,10 +212,12 @@ button[type="reset"] {
 		<%
 		} else {
 		%>
+		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
+		
 	</nav>
 	<br>
 	<br>
