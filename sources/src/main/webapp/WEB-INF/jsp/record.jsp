@@ -194,13 +194,13 @@ button[type="reset"] {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>

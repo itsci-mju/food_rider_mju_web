@@ -22,23 +22,18 @@ try {
 }
 %>
 <%
-PostManager pm = new PostManager();
-List<Post> list = (List<Post>) session.getAttribute("sp");
-
-%>
-<%
+Post lipo = null;
 List<Post> Post = null;
-%>
-<%
-PostManager sm = new PostManager();
-%>
-<%
-try {
-	Post = sm.Showpost();
+try{
+	PostManager pm = new PostManager();
+	lipo = (Post) session.getAttribute("Post_OR");
+	List<Post> lp = (List<Post>) session.getAttribute("sp");
 } catch (Exception e) {
-
+	System.out.println("Error! ");
 }
+
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -260,13 +255,13 @@ text-align: center;
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -288,11 +283,12 @@ text-align: center;
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadorder">
 		<h1>กรุณาเลือกรายการอาหาร</h1>
-		<%if(list != null) {%>
-		<h1><%=list.get(0).getRestaurant() %></h1>
-		<img alt="<%=list.get(0).getMeun() %>" src="" width="200" height="150">
-		<label>จำนวน : <%=list.get(0).getAmount() %></label>
-		<label>ค่าส่ง : <%=list.get(0).getDeliveryfee() %></label>
+		<%if(lipo != null) {%>
+		
+		<h1><%=lipo.getRestaurant() %></h1>
+		<img alt="./img/<%=lipo.getMeun() %>" src="" width="200" height="150">
+		<label>จำนวน : <%=lipo.getAmount() %></label>
+		<label>ค่าส่ง : <%=lipo.getDeliveryfee() %></label>
 		<label> <input type="checkbox" name="fruit" value="transfer"
 			onclick="checkOnlyOne(this)"> โอน
 		</label> <br> <label> <input type="checkbox" name="fruit"
@@ -300,7 +296,7 @@ text-align: center;
 		</label><br>
 		<label>หมายเหตุ</label>
 		<input type="note" name="note" value="หมายเหตุ">
-		<p><%=list.get(0).getLocation() %></p>
+		<p><%=lipo.getLocation() %></p>
 
 <%} %>
 

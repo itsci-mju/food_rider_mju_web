@@ -238,13 +238,13 @@ output .span--hidden {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -266,7 +266,7 @@ output .span--hidden {
 	<br>
 	<br>
 	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/ShowPost">
+		action="${pageContext.request.contextPath}/loadlistPost">
 
 		<h1>ข้อมูลโพสต์รัส่งอาหาร</h1>
 		<!-- class="image-preview" -->
@@ -292,9 +292,9 @@ output .span--hidden {
 				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
     			
 			<tr>
-				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
+				<th><img class="image-preview" src="./img/<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getRestaurant() %></th>
-				<th><img src="<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
+				<th><img class="image-preview" src="./img/<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getPostDate() %></th>
 				<th><%=pt.getPostTime() %></th>
 				<th><%=pt.getAmount() %></th>

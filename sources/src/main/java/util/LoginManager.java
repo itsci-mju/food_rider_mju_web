@@ -18,7 +18,7 @@ public class LoginManager {
 			Statement statment = conn.createStatement();
 			statment.execute("insert into member values('" + m.getMemID() + "','" + m.getMemName() + "','"
 					+ m.getMemPhone() + "','" + m.getMemEmail() + "','" + m.getMemFeature() + "','"
-					+ m.getMemImageProfile() + "','" + m.getMemAddress() + "','" + m.getPassword() + "')");
+					+ m.getMemImageProfile() + "','" + m.getMemAddress() + "','" + m.getPassword() + "','" + m.getStatus() + "')");
 			conn.close();
 			return 1;
 		} catch (Exception e) {
@@ -67,7 +67,8 @@ public class LoginManager {
 				String memFeature = rs.getString(6);
 				String memImageProfile = rs.getString(7);
 				String password = rs.getString(8);
-				m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password);
+				String status = rs.getString(9);
+				m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password, status);
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -94,8 +95,9 @@ public class LoginManager {
 				String memFeature = rs.getString(6);
 				String memImageProfile = rs.getString(7);
 				String password = rs.getString(8);
+				String status = rs.getString(9);
 				Member m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile,
-						password);
+						password, status);
 				list.add(m);
 			}
 			con.close();
@@ -110,9 +112,11 @@ public class LoginManager {
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String sql = " UPDATE project.member SET memImageProfile = '" + pro.getMemImageProfile() + "',memName = '"
-					+ pro.getMemName() + "',memEmail = '" + pro.getMemAddress() + "',memPhone = '" + pro.getMemPhone()
-					+ "',memFeature = '" + pro.getMemFeature() + "',password= '" + pro.getPassword() + "'";
+			String sql = "UPDATE project.member SET memName = '"+pro.getMemName()
+												+"',memPhone = '"+pro.getMemPhone()+"',memEmail = '"+pro.getMemEmail()
+												+"',memAddress ='"+pro.getMemAddress()+"' ,memFeature = '"+pro.getMemFeature()
+												+"', memImageProfile = '"+pro.getMemImageProfile()+"',password= '"+pro.getPassword()
+												+"', status = '"+pro.getStatus()+"' WHERE memID = "+pro.getMemID()+"";
 			int result = stmt.executeUpdate(sql);
 			con.close();
 			return 1;
@@ -142,8 +146,9 @@ public class LoginManager {
 				String memFeature = rs.getString(6);
 				String memImageProfile = rs.getString(7);
 				String password = rs.getString(8);
+				String status = rs.getString(9);
 				Member m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile,
-						password);
+						password, status);
 				list.add(m);
 			}
 			con.close();
@@ -170,7 +175,8 @@ public class LoginManager {
 				String memFeature = rs.getString(6);
 				String memImageProfile = rs.getString(7);
 				String password = rs.getString(8);
-				m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password);
+				String status = rs.getString(9);
+				m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password, status);
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -227,5 +233,44 @@ public class LoginManager {
 		}
 		return list;
 
+	}
+	public int updatestatus(String id , String name ,String status )    {  
+		try{  
+			ConnectionDB dbcon = new ConnectionDB();
+       Connection   conn = dbcon.getConnection();   
+       Statement   statment = conn.createStatement(); 
+       statment.execute( "update project.member set status ='"+status+"' where memID like '"+id+"' and memName like '"+name+"'"); 
+       conn.close(); 
+       return 1; 
+       }catch(Exception e){          
+    	   return -1; }   
+		}
+	public List<Member> SearchMember(String memmID){
+		List<Member> list = new ArrayList<>();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select * from project.member where memID = '" + memmID + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next() && rs.getRow() == 1) {
+				int memID = rs.getInt(1);
+				String memName = rs.getString(2);
+				String memPhone = rs.getString(3);
+				String memEmail = rs.getString(4);
+				String memAddress = rs.getString(5);
+				String memFeature = rs.getString(6);
+				String memImageProfile = rs.getString(7);
+				String password = rs.getString(8);
+				String status = rs.getString(9);
+				Member m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password, status);
+			list.add(m);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+		
 	}
 }

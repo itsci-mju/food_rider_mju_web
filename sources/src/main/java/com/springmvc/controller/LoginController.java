@@ -33,7 +33,7 @@ public class LoginController {
 		String memEmail = request.getParameter("Email");
 		String memFeature = request.getParameter("Feature");
 		String password = request.getParameter("password");
-		Member m = new Member(0, "", "", memEmail, "", memFeature, "", password);
+		Member m = new Member(0, "", "", memEmail, "", memFeature, "", password,"");
 		LoginManager lm = new LoginManager();
 		m = lm.verifyLogin(m);
 		
@@ -90,7 +90,7 @@ public class LoginController {
 				String imgname = memImageProfile.split("\\.")[1];
 				String imgname2 = ma + "." + imgname;
 
-				Member m = new Member(ma + 1, memName, memPhone, memEmail, imgname2, memaddress, memFeature, password);
+				Member m = new Member(ma + 1, memName, memPhone, memEmail, imgname2, memaddress, memFeature, password,"»Å´ºÅçÍ¡");
 				// System.out.println(m.getMemAID()+m.getMemAName()+m.getMemAPhone()+m.getMemAEmail()+m.getMemAaddress()+m.getMemAImageProfile()+m.getApassword());
 
 				erorr = lm.insertMember(m);
@@ -121,12 +121,13 @@ public class LoginController {
 				String memFeature = request.getParameter("memFeature");
 				String memImageProfile =request.getParameter("memImageProfile");
 				String password = request.getParameter("password");
+				String status =request.getParameter("status");
 				LoginManager lm = new LoginManager();
 				int ma = lm.getMaxMember();
 				String s = String.valueOf(ma);
 				
 				Member mr = new Member(ma + 1, memName , memEmail,memaddress,memPhone , memFeature, memImageProfile,
-						password);
+						password, status);
 				erorr = lm.EditProfile(mr);
 				
 			} catch (Exception e) {
@@ -187,6 +188,53 @@ public class LoginController {
 		session.setAttribute("sp",sp);
 		return "index";
 	}
-
+	/*@RequestMapping(value = "/loadeditMember", method = RequestMethod.GET)
+	public ModelAndView getMember(HttpServletRequest request, Model md, HttpSession session) {
+		int erorr = 0;
+		ModelAndView mav = new ModelAndView("editProfile");
+		if (ServletFileUpload.isMultipartContent(request)) {
+			try {
+				request.setCharacterEncoding("UTF-8");
+				
+				String memName = request.getParameter("memName");
+				String memEmail = request.getParameter("memEmail");
+				String memaddress = request.getParameter("memaddress");
+				String memPhone = request.getParameter("memPhone");
+				String memFeature = request.getParameter("memFeature");
+				String memImageProfile =request.getParameter("memImageProfile");
+				String password = request.getParameter("password");
+				String status = request.getParameter("status");
+				LoginManager lm = new LoginManager();
+				int ma = lm.getMaxMember();
+				String s = String.valueOf(ma);
+				
+				Member mr = new Member(ma + 1, memName , memEmail,memaddress,memPhone , memFeature, memImageProfile,
+						password,status);
+				erorr = lm.EditProfile(mr);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				erorr = -1;
+			}
+			mav.addObject("errorM", erorr);
+			session.setAttribute("errorM", erorr);
+			System.out.println("Member" + erorr);
+		}
+		return mav;
+	}*/
+	@RequestMapping (value="/resPostupdate",method=RequestMethod.GET)
+	public String resPostupdate(HttpSession session , HttpServletRequest  request) {
+		LoginManager DM = new LoginManager();
+		String memID = request.getParameter("memID");
+		String memName = request.getParameter("memName");
+		String Status = request.getParameter("Status");
+		
+	int st = DM.updatestatus(memID,memName,Status);
+	
+	List<Member>mem = DM.SearchMember(memName);
+	session.setAttribute("mem1",mem);
+	
+	return "listMember";
+	}
 	
 }

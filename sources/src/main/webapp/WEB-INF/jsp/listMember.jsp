@@ -61,7 +61,7 @@ form {
 	background-color: white;
 	padding: 20px;
 	border-radius: 10px;
-	width: 50%;
+	width: 80%;
 	margin: 0 auto;
 }
 /* CSS for navbar links */
@@ -219,6 +219,46 @@ output .span--hidden {
 	background-size: cover;
 	background-position: center;
 }
+/* แต่งปุ่มตลาง */
+.center-btn {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+}
+
+.center-btn:hover {
+  background-color: #3e8e41;
+}
+
+/* แต่งปุ่มยกเลิก */
+.cancel-btn {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+}
+
+.cancel-btn:hover {
+  background-color: #c62828;
+}
+
 </style>
 </head>
 <body>
@@ -240,13 +280,13 @@ output .span--hidden {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -284,6 +324,7 @@ output .span--hidden {
 				<th>สถานะ</th>
 				<th>รหัสผ่าน</th>
 				<th></th>
+				<th></th>
 			</tr>
 			<%for(Member m : list) {%>
 				
@@ -297,18 +338,22 @@ output .span--hidden {
 				<th><%=m.getMemFeature() %></th>
 				<th><%=m.getPassword() %></th>
 				<th>
-				<a href="${pageContext.request.contextPath}/delMember?memID=<%=m.getMemID() %>">ลบ</a>
+				<!-- <a href="${pageContext.request.contextPath}/loadeditMember?memID=<%=m.getMemID() %>">แก้ไข</a> -->
 				</th>
+				<%if(m.getStatus().equals("ปลดบล็อก")){ %>
+				<th><a href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=ปลดบล็อกแล้ว"><button class="center-btn" >ปลดบล็อก</button></a></th>
+				<%} %>
+				
+				<%if(m.getStatus().equals("บล็อก")){ %>
+				<th><a  href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=บล็อก"><button class="cancel-btn" >บล็อก</button></a></th>
+				<%} %>
 			</tr>
 			<%} %>
 		<%} %>
 		
 		</table>
 		<%} %>
-		<div>
-			<input type="submit" value="บันทึก"
-				OnClick="return validateForm(frm)" />
-		</div>
+		
 
 	</form>
 </body>

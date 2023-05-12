@@ -151,7 +151,24 @@ input[type="submit"] {
 	border-radius: 5px;
 	cursor: pointer;
 }
+.a-but{
+	
+	color: white;
 
+}
+.button-b{
+	background-color: #6a5acd;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+ 
+}
 .file {
 	width: 100%;
 	height: 100%;
@@ -232,13 +249,13 @@ output .span--hidden {
 		if (level == 3 || level == 1) {
 		%>
 		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก่ไขประกาศรับส่ง</a>
+		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
 		<%
 		}
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -274,15 +291,16 @@ output .span--hidden {
 		<%if (pt.getPostID() == pt.getPostID()) {%>
 		<tr>
 		<label for="Restaurant"><h3>ชื่อร้านอาหาร : <%=pt.getRestaurant()%></h3></label><br> 
-		 <img src="<%=pt.getMeun()%>" alt=""width="200" height="150"> <br>
+		 <img src="./img/<%=pt.getMeun()%>" alt=""width="200" height="150"> <br>
 		<label for="PostDate">วันที่ส่งอาหาร : <%=pt.getPostDate()%></label>
 		<label for="PostTime">เวลาส่งอาหาร : <%=pt.getPostTime()%></label> 
-		<label for="Amount">จำนวนคนส่งอาหาร : <%=pt.getAmount()%></label> 
+		<label for="Amount">จำนวนคนรับอาหาร : <%=pt.getAmount()%></label> 
 		<label for="Deliveryfee">ค่าส่ง : <%=pt.getDeliveryfee()%></label> 
 		<label for="Detail">หมายเหตุ : <%=pt.getDetail()%></label> 
 		<label for="Location">ที่อยู่ : <%=pt.getLocation()%></label> 
 		<%if (level == 3 || level == 2 || level == 1) { %>
-		<br><br><input type="submit" value="เข้าร่วมกลุ่ม" OnClick="return validateForm(frm)" />
+		<br><br><a class="button-b" href="${pageContext.request.contextPath}/loadorder" >เข้าร่วมกลุ่ม</a>
+		
 		<%}%>
 		</tr>
 		<br><br><br><br>

@@ -24,12 +24,14 @@ public class Member {
 	private String memImageProfile;
 	@Column(length = 45, nullable = false)
 	private String password;
+	@Column(length=100 ,nullable = false)
+	private String status;
 	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Member(int memID, String memName, String memPhone, String memEmail, String memAddress, String memFeature,
-			String memImageProfile, String password) {
+			String memImageProfile, String password, String status) {
 		super();
 		this.memID = memID;
 		this.memName = memName;
@@ -39,6 +41,7 @@ public class Member {
 		this.memFeature = memFeature;
 		this.memImageProfile = memImageProfile;
 		this.password = password;
+		this.status = status;
 	}
 	public int getMemID() {
 		return memID;
@@ -88,4 +91,12 @@ public class Member {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 }

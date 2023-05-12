@@ -62,7 +62,7 @@ public class PostManager {
 												+"',postTime = '"+p.getPostTime()+"',detail = '"+p.getDetail()
 												+"',amount = "+p.getAmount()+",deliveryfee = "+p.getDeliveryfee()
 												+",location = '"+p.getLocation()+"',profile_pic = '"+p.getProfile_pic()
-												+"',member_PostID = " + p.getMember_PostID() + "";
+												+"' WHERE member_PostID = " + p.getMember_PostID() + "";
 			int result = stmt.executeUpdate(sql);
 			con.close();
 			return 1;

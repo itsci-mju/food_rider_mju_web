@@ -1,4 +1,5 @@
 package com.springmvc.controller;
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.io.File;
@@ -20,7 +21,6 @@ import util.*;
 @Controller
 public class PostController {
 
-
 	@RequestMapping(value = "/loadpost", method = RequestMethod.GET)
 	public String loadaddpostPage() {
 		return "post";
@@ -39,15 +39,16 @@ public class PostController {
 				System.out.println(meun);
 				String postDate = new String(data.get(3).get(), StandardCharsets.UTF_8);
 				String postTime = new String(data.get(4).get(), StandardCharsets.UTF_8);
-				/*Date now = new Date();
-		        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-		        String timeString = format.format(now);*/
-		        int amount = Integer.parseInt(data.get(5).getString());
-		        int deliveryfee = Integer.parseInt(data.get(6).getString());
+				/*
+				 * Date now = new Date(); SimpleDateFormat format = new
+				 * SimpleDateFormat("HH:mm:ss"); String timeString = format.format(now);
+				 */
+				int amount = Integer.parseInt(data.get(5).getString());
+				int deliveryfee = Integer.parseInt(data.get(6).getString());
 				String detail = new String(data.get(7).get(), StandardCharsets.UTF_8);
 				String location = new String(data.get(8).get(), StandardCharsets.UTF_8);
-				Member member_PostID = (Member)session.getAttribute("Customer");
-				
+				Member member_PostID = (Member) session.getAttribute("Customer");
+
 				System.out.println(postDate);
 				System.out.println(postTime);
 				PostManager pm = new PostManager();
@@ -57,17 +58,15 @@ public class PostController {
 				String imgmeun = meun.split("\\.")[1];
 				String imgname2 = mp + "." + imgname;
 				String imgmeun2 = mp + "." + imgmeun;
-				Post p = new Post(mp + 1, restaurant,imgmeun2,postDate,postTime , detail, amount, deliveryfee,
-						location, imgname2,member_PostID.getMemID());
+				Post p = new Post(mp + 1, restaurant, imgmeun2, postDate, postTime, detail, amount, deliveryfee,
+						location, imgname2, member_PostID.getMemID());
 				message = pm.insertPost(p);
 				String path = request.getSession().getServletContext().getRealPath("/") + "//images//";
 				System.out.println(path);
-				System.out.println("g5"+imgmeun);
-				System.out.println("member_PostID"+member_PostID.getMemID());
+				System.out.println("g5" + imgmeun);
+				System.out.println("member_PostID" + member_PostID.getMemID());
 				data.get(0).write(new File(path + File.separator + imgname2));
 				data.get(2).write(new File(path + File.separator + imgmeun2));
-				
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -78,6 +77,7 @@ public class PostController {
 		mav.addObject("message", message);
 		return mav;
 	}
+
 	@RequestMapping(value = "/loadeditPost", method = RequestMethod.GET)
 	public ModelAndView geteditPost(HttpServletRequest request, Model md, HttpSession session) {
 		int erorr = 0;
@@ -85,26 +85,26 @@ public class PostController {
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				request.setCharacterEncoding("UTF-8");
-				
+
 				int postID = Integer.parseInt(request.getParameter("postID"));
 				String restaurant = request.getParameter("restaurant");
 				String meun = request.getParameter("meun");
 				String postDate = request.getParameter("postDate");
 				String postTime = request.getParameter("postTime");
-		        int amount = Integer.parseInt(request.getParameter("amount"));
-		        int deliveryfee = Integer.parseInt(request.getParameter("deliveryfee"));
+				int amount = Integer.parseInt(request.getParameter("amount"));
+				int deliveryfee = Integer.parseInt(request.getParameter("deliveryfee"));
 				String detail = request.getParameter("detail");
 				String location = request.getParameter("location");
 				String profile_pic = request.getParameter("profile_pic");
-				Member member_PostID = (Member)session.getAttribute("Customer");
+				Member member_PostID = (Member) session.getAttribute("Customer");
 				PostManager lm = new PostManager();
 				int ma = lm.getMaxPost();
 				String s = String.valueOf(ma);
-				
-				Post mr = new Post(postID,  restaurant,meun,postDate,postTime , detail, amount, deliveryfee,
-						location, profile_pic,member_PostID.getMemID() );
+
+				Post mr = new Post(postID, restaurant, meun, postDate, postTime, detail, amount, deliveryfee, location,
+						profile_pic, member_PostID.getMemID());
 				erorr = lm.EditPost(mr);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				erorr = -1;
@@ -115,18 +115,19 @@ public class PostController {
 		}
 		return mav;
 	}
+
 	@RequestMapping(value = "/loadeditP", method = RequestMethod.GET)
 	public String loadeditPostsPage(HttpSession session, HttpServletRequest request) {
 		System.out.println("id+dvsdvvs+ ");
 		String postID = request.getParameter("postID");
-		
+
 		PostManager sm = new PostManager();
 		Post s = sm.getpost(postID);
 		session.setAttribute("Epost", s);
-		System.out.println("id+ "+postID);
+		System.out.println("id+ " + postID);
 		return "editPost";
 	}
-	
+
 	@RequestMapping(value = "/loadlistPost", method = RequestMethod.GET)
 	public String do_listPost(HttpSession session) {
 		PostManager sm = new PostManager();
@@ -134,36 +135,51 @@ public class PostController {
 		session.removeAttribute("posts");
 		return "listPost";
 	}
+
 	@RequestMapping(value = "/ShowPost", method = RequestMethod.GET)
 	public String doShowPost(HttpSession session, HttpServletRequest request) {
 		PostManager sm = new PostManager();
-		Member member_PostID = (Member)session.getAttribute("Customer");
+		Member member_PostID = (Member) session.getAttribute("Customer");
 		List<Post> sp = sm.Showpost(member_PostID.getMemID());
-		for(Post m : sp) {
-			System.out.println( "ko"+m.getPostID());
+		for (Post m : sp) {
+			System.out.println("ko" + m.getPostID());
 		}
 		session.removeAttribute("sp");
-		session.setAttribute("sp",sp);
+		session.setAttribute("sp", sp);
 		return "listPost";
 	}
-	
-	@RequestMapping (value="/delPost",method=RequestMethod.GET)
-	public String dodelPost(HttpServletRequest request,HttpSession session) {
-	try {
-	request.setCharacterEncoding("UTF-8");
-	}catch(UnsupportedEncodingException e) {
-	e.printStackTrace();
+
+	@RequestMapping(value = "/delPost", method = RequestMethod.GET)
+	public String dodelPost(HttpServletRequest request, HttpSession session) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String postID = request.getParameter("postID");
+		System.out.println(postID);
+		PostManager sm = new PostManager();
+		Member member_PostID = (Member) session.getAttribute("Customer");
+		int r = sm.deletePost(postID);
+		request.setAttribute("rpost", r);
+		List<Post> st = sm.Showpost(member_PostID.getMemID());
+		session.setAttribute("st", st);
+		return "listPost";
 	}
-	String postID = request.getParameter("postID");
-	System.out.println(postID);
-	PostManager sm = new PostManager();
-	Member member_PostID = (Member)session.getAttribute("Customer");
-	int r = sm.deletePost(postID);
-	request.setAttribute("rpost", r);
-	List<Post> st = sm.Showpost(member_PostID.getMemID());
-	session.setAttribute("st",st);
-	return "listPost";
-}
-	
+
+	@RequestMapping(value = "/loadorder", method = RequestMethod.GET)
+	public String loadorderPage(HttpServletRequest request, Model md, HttpSession session) {
+		String postID = request.getParameter("postID");
+		try {
+			PostManager sm = new PostManager();
+			Post s = sm.getpost(postID);
+			session.setAttribute("Post_OR", s);
+			System.out.println("id+ " + postID);
+
+		} catch (Exception e) {
+			System.out.println("Error!55");
+		}
+		return "orders";
+	}
 
 }
