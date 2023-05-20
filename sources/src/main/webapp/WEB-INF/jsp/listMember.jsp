@@ -5,6 +5,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 List<Member> list = (List<Member>) session.getAttribute("st");
+/*int error = 0;
+try{
+	error = (int) request.getAttribute("errorListMember");
+}catch (Exception e) {
+	error = 0;
+	
+}
+
+if(error == 1){
+	System.out.println("บันทึกเสร็จ");
+}else if (error == -1){
+	System.out.println("ไม่บันทึกเสร็จ");
+}*/
+
 %>
 <%
 /*Member lm = (Member)session.getAttribute("mtCustomer");
@@ -258,7 +272,13 @@ output .span--hidden {
 .cancel-btn:hover {
   background-color: #c62828;
 }
-
+.divo {
+background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 80%;
+	margin: 0 auto;
+}
 </style>
 </head>
 <body>
@@ -272,7 +292,7 @@ output .span--hidden {
 		<%
 		if (level == 2 || level == 1) {
 		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+		<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
 		<%
 		}
 		%>
@@ -286,7 +306,7 @@ output .span--hidden {
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -307,8 +327,9 @@ output .span--hidden {
 	</nav>
 	<br>
 	<br>
-	<form name="frm" method="post" enctype="multipart/form-data"
-		action="${pageContext.request.contextPath}/Showmember">
+
+<div class=" divo">
+
 
 		<h1>ข้อมูสมาชิก</h1>
 		<!-- class="image-preview" -->
@@ -322,6 +343,7 @@ output .span--hidden {
 				<th>ที่อยู่</th>
 				<th>เบอร์โทรศัพท์</th>
 				<th>สถานะ</th>
+				<th>รหัสสมาชิก</th>
 				<th>รหัสผ่าน</th>
 				<th></th>
 				<th></th>
@@ -336,16 +358,17 @@ output .span--hidden {
 				<th><%=m.getMemAddress() %></th>
 				<th><%=m.getMemPhone() %></th>
 				<th><%=m.getMemFeature() %></th>
+				<th><%=m.getMemID() %></th>
 				<th><%=m.getPassword() %></th>
 				<th>
 				<!-- <a href="${pageContext.request.contextPath}/loadeditMember?memID=<%=m.getMemID() %>">แก้ไข</a> -->
 				</th>
 				<%if(m.getStatus().equals("ปลดบล็อก")){ %>
-				<th><a href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=ปลดบล็อกแล้ว"><button class="center-btn" >ปลดบล็อก</button></a></th>
+				<th><a href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=บล็อก"><button class="center-btn" >ปลดบล็อก</button></a></th>
 				<%} %>
 				
 				<%if(m.getStatus().equals("บล็อก")){ %>
-				<th><a  href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=บล็อก"><button class="cancel-btn" >บล็อก</button></a></th>
+				<th><a  href="${pageContext.request.contextPath}/resPostupdate?memID=<%=m.getMemID() %>&status=ปลดบล็อก"><button class="cancel-btn" >บล็อก</button></a></th>
 				<%} %>
 			</tr>
 			<%} %>
@@ -355,6 +378,6 @@ output .span--hidden {
 		<%} %>
 		
 
-	</form>
+</div>
 </body>
 </html>

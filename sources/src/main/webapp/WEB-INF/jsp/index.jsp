@@ -241,7 +241,7 @@ output .span--hidden {
 		<%
 		if (level == 2 || level == 1) {
 		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+		<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
 		<%
 		}
 		%>
@@ -255,7 +255,7 @@ output .span--hidden {
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -274,6 +274,7 @@ output .span--hidden {
 		%>
 		
 	</nav>
+	<br><br>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadorder">
 		<%
@@ -288,7 +289,7 @@ output .span--hidden {
 		<%if (sp != null) {%>
 		<table style="width: 100%">
 		<%for (Post pt : sp) {%>
-		<%if (pt.getPostID() == pt.getPostID()) {%>
+		<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
 		<tr>
 		<label for="Restaurant"><h3>ชื่อร้านอาหาร : <%=pt.getRestaurant()%></h3></label><br> 
 		 <img src="./img/<%=pt.getMeun()%>" alt=""width="200" height="150"> <br>
@@ -299,7 +300,7 @@ output .span--hidden {
 		<label for="Detail">หมายเหตุ : <%=pt.getDetail()%></label> 
 		<label for="Location">ที่อยู่ : <%=pt.getLocation()%></label> 
 		<%if (level == 3 || level == 2 || level == 1) { %>
-		<br><br><a class="button-b" href="${pageContext.request.contextPath}/loadorder" >เข้าร่วมกลุ่ม</a>
+		<br><br><a class="button-b" href="${pageContext.request.contextPath}/loadorder?postID=<%=pt.getPostID() %>" >เข้าร่วมกลุ่ม</a>
 		
 		<%}%>
 		</tr>

@@ -6,6 +6,7 @@
 <%
 Member memFeature = null;
 %>
+
 <%
 int level = 0;
 %>
@@ -21,18 +22,7 @@ try {
 
 }
 %>
-<%
-Post lipo = null;
-List<Post> Post = null;
-try{
-	PostManager pm = new PostManager();
-	lipo = (Post) session.getAttribute("Post_OR");
-	List<Post> lp = (List<Post>) session.getAttribute("sp");
-} catch (Exception e) {
-	System.out.println("Error! ");
-}
 
-%>
 
 <!DOCTYPE html>
 <html>
@@ -218,11 +208,26 @@ output .span--hidden {
 	background-size: cover;
 	background-position: center;
 }
+
 h1 {
-  text-align: center;
+	text-align: center;
 }
+
 p {
-text-align: center;
+	text-align: center;
+}
+.button-b{
+	background-color: #6a5acd;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+ 
 }
 </style>
 <script>
@@ -237,68 +242,82 @@ text-align: center;
 </script>
 </head>
 <body>
-		<!-- navbar -->
+	<!-- navbar -->
 	<nav class="navbar">
 		<div style="text-align: left;">
-		<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
-		<%
-		if (level != 0) {
-		%>
-		<%
-		if (level == 2 || level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
-		<%
-		}
-		%>
-		<%
-		if (level == 3 || level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
-		<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
-		<%
-		}
-		%>
+			<a href="${pageContext.request.contextPath}/">หน้าหลัก</a>
+			<%
+			if (level != 0) {
+			%>
+			<%
+			if (level == 2 || level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
+			<%
+			}
+			%>
+			<%
+			if (level == 3 || level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loadpost">ประกาศรับส่ง</a>
+			<a href="${pageContext.request.contextPath}/ShowPost">แก้ไขประกาศรับส่ง</a>
+			<%
+			}
+			%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
-		<%
-		if (level == 1) {
-		%>
-		<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
-		<%
-		}
-		%>
-		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
-		<%
-		} else {
-		%>
+			<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
+			<%
+			if (level == 1) {
+			%>
+			<a href="${pageContext.request.contextPath}/loaddelMember">ข้อมูลสมาชิก</a>
+			<%
+			}
+			%>
+			<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
+			<%
+			} else {
+			%>
 		</div>
 		<a href="${pageContext.request.contextPath}/loadlogin">เช้าสู่ระบบ</a>
 		<%
 		}
 		%>
-		
+
 	</nav>
 	<form name="frm" method="post" enctype="multipart/form-data"
 		action="${pageContext.request.contextPath}/loadorder">
 		<h1>กรุณาเลือกรายการอาหาร</h1>
-		<%if(lipo != null) {%>
+		<%
 		
-		<h1><%=lipo.getRestaurant() %></h1>
-		<img alt="./img/<%=lipo.getMeun() %>" src="" width="200" height="150">
-		<label>จำนวน : <%=lipo.getAmount() %></label>
-		<label>ค่าส่ง : <%=lipo.getDeliveryfee() %></label>
-		<label> <input type="checkbox" name="fruit" value="transfer"
-			onclick="checkOnlyOne(this)"> โอน
-		</label> <br> <label> <input type="checkbox" name="fruit"
-			value="destination" onclick="checkOnlyOne(this)"> เก็บเงินปลายทาง
-		</label><br>
-		<label>หมายเหตุ</label>
-		<input type="note" name="note" value="หมายเหตุ">
-		<p><%=lipo.getLocation() %></p>
+		List<Post> lipo = (List<Post>) session.getAttribute("sp");
+		/*Post lipo = null;
+		lipo = (Post) session.getAttribute("Epost");*/
+		%>
+		<%
+		/*if (lipo != null && lipo.get(i).getPostID() == lipo.get(i).getPostID()) */
+		/*if(lipo != null && lipo.getPostID() == lipo.getPostID() && lipo.getMember_PostID() == lipo.getMember_PostID())*/
+		{
+		%>
 
-<%} %>
+		<h1><%=lipo.get(0).getRestaurant()%></h1>
+		<img alt="" src="./img/<%=lipo.get(0).getMeun()%>" width="400" height="250">
+		<label>จำนวน : <%=lipo.get(0).getAmount()%></label> <label>ค่าส่ง :
+			<%=lipo.get(0).getDeliveryfee()%></label> <label> <input type="checkbox"
+			name="fruit" value="transfer" onclick="checkOnlyOne(this)">
+			โอน
+		</label> <br> <label> <input type="checkbox" name="fruit"
+			value="destination" onclick="checkOnlyOne(this)">
+			เก็บเงินปลายทาง
+		</label><br> <label>หมายเหตุ</label> <input type="note" name="note"
+			value="หมายเหตุ"> <label>ที่อยู่จัดส่ง</label>
+		<p><%=lipo.get(0).getLocation()%></p>
+		
+		<button class="button-b" type="Submit" name="button" OnClick="return validateForm(frm)">ตกลง</button>
+		<button class="button-b" type="reset" name="button">ยกเลิก</button>
+		<%
+		}
+		%>
 
 	</form>
 </body>

@@ -116,7 +116,7 @@ public class LoginManager {
 												+"',memPhone = '"+pro.getMemPhone()+"',memEmail = '"+pro.getMemEmail()
 												+"',memAddress ='"+pro.getMemAddress()+"' ,memFeature = '"+pro.getMemFeature()
 												+"', memImageProfile = '"+pro.getMemImageProfile()+"',password= '"+pro.getPassword()
-												+"', status = '"+pro.getStatus()+"' WHERE memID = "+pro.getMemID()+"";
+												+"' WHERE memID = "+pro.getMemID()+"";
 			int result = stmt.executeUpdate(sql);
 			con.close();
 			return 1;
@@ -234,12 +234,12 @@ public class LoginManager {
 		return list;
 
 	}
-	public int updatestatus(String id , String name ,String status )    {  
+	public int updatestatus(String id  ,String status )    {  
 		try{  
 			ConnectionDB dbcon = new ConnectionDB();
        Connection   conn = dbcon.getConnection();   
        Statement   statment = conn.createStatement(); 
-       statment.execute( "update project.member set status ='"+status+"' where memID like '"+id+"' and memName like '"+name+"'"); 
+       statment.execute( "update project.member set status ='"+status+"' where memID like '"+id+"'"); 
        conn.close(); 
        return 1; 
        }catch(Exception e){          
@@ -265,6 +265,34 @@ public class LoginManager {
 				String status = rs.getString(9);
 				Member m = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password, status);
 			list.add(m);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	public Member SMembers(String memmID){
+		Member list = new Member();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select * from project.member where memID = '" + memmID + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next() && rs.getRow() == 1) {
+				int memID = rs.getInt(1);
+				String memName = rs.getString(2);
+				String memPhone = rs.getString(3);
+				String memEmail = rs.getString(4);
+				String memAddress = rs.getString(5);
+				String memFeature = rs.getString(6);
+				String memImageProfile = rs.getString(7);
+				String password = rs.getString(8);
+				String status = rs.getString(9);
+				list = new Member(memID, memName, memPhone, memEmail, memAddress, memFeature, memImageProfile, password, status);
+			
 			}
 			con.close();
 		} catch (SQLException e) {

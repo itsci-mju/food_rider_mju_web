@@ -217,6 +217,31 @@ output .span--hidden {
 	background-size: cover;
 	background-position: center;
 }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #333333;
+  }
+  
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+tr:hover {
+    background-color: #dddddd;
+  }
 </style>
 </head>
 <body>
@@ -230,7 +255,7 @@ output .span--hidden {
 		<%
 		if (level == 2 || level == 1) {
 		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+		<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
 		<%
 		}
 		%>
@@ -244,7 +269,7 @@ output .span--hidden {
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -275,7 +300,6 @@ output .span--hidden {
 		<table style="width: 100%">
 		
 			<tr>
-				<th>รูปโปรไฟล์</th>
 				<th>ชื่อร้านอาหาร</th>
 				<th>เมนู</th>
 				<th>วันที่ส่งอาหาร</th>
@@ -284,6 +308,10 @@ output .span--hidden {
 				<th>ค่าส่ง</th>
 				<th>หมายเหตุ</th>
 				<th>ที่อยู่</th>
+				<%if(level == 1 ) {%>
+				<th>รหัสไรเดอร์</th>
+				
+			<%} %>
 			</tr>
 			<%if(level == 1 ) {%>
 			<%for(Post pt : sp ) {%>
@@ -292,7 +320,6 @@ output .span--hidden {
 				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
     			
 			<tr>
-				<th><img class="image-preview" src="./img/<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getRestaurant() %></th>
 				<th><img class="image-preview" src="./img/<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getPostDate() %></th>
@@ -301,6 +328,7 @@ output .span--hidden {
 				<th><%=pt.getDeliveryfee() %></th>
 				<th><%=pt.getDetail() %></th>
 				<th><%=pt.getLocation() %></th>
+				<th><%=pt.getMember_PostID() %></th>
 				<th>
 				<a href="${pageContext.request.contextPath}/loadeditP?postID=<%=pt.getPostID() %>">แก้ไข</a>
 				<a href="${pageContext.request.contextPath}/delPost?postID=<%=pt.getPostID() %>">ลบ</a>
@@ -315,9 +343,8 @@ output .span--hidden {
 				<%if (pt != null && pt.getPostID() == pt.getPostID()) {%>
     			
 			<tr>
-				<th><img src="<%=pt.getProfile_pic() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getRestaurant() %></th>
-				<th><img src="<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
+				<th><img src="./img/<%=pt.getMeun() %>" alt="" width="200" height="150"></th>
 				<th><%=pt.getPostDate() %></th>
 				<th><%=pt.getPostTime() %></th>
 				<th><%=pt.getAmount() %></th>

@@ -167,19 +167,5 @@ public class PostController {
 		return "listPost";
 	}
 
-	@RequestMapping(value = "/loadorder", method = RequestMethod.GET)
-	public String loadorderPage(HttpServletRequest request, Model md, HttpSession session) {
-		String postID = request.getParameter("postID");
-		try {
-			PostManager sm = new PostManager();
-			Post s = sm.getpost(postID);
-			session.setAttribute("Post_OR", s);
-			System.out.println("id+ " + postID);
-
-		} catch (Exception e) {
-			System.out.println("Error!55");
-		}
-		return "orders";
-	}
-
+	
 }

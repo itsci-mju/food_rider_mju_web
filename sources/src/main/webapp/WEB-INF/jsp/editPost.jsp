@@ -249,7 +249,7 @@ output .span--hidden {
 			<%
 			if (level == 2 || level == 1) {
 			%>
-			<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+			<a href="${pageContext.request.contextPath}/loadorder">ประวัติ</a>
 			<%
 			}
 			%>
@@ -263,7 +263,7 @@ output .span--hidden {
 			%>
 		</div>
 		<div style="text-align: right;">
-			<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+			<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 			<%
 			if (level == 1) {
 			%>

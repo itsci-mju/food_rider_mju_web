@@ -186,7 +186,7 @@ button[type="reset"] {
 		<%
 		if (level == 2 || level == 1) {
 		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+		<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
 		<%
 		}
 		%>
@@ -200,7 +200,7 @@ button[type="reset"] {
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>

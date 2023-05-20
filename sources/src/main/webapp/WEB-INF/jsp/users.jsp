@@ -80,7 +80,7 @@
 		<%
 		}
 		%>
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก่ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก่ไขข้อมูล</a>
 		<a href="${pageContext.request.contextPath}/loadlogout">ออกระบบ</a>
 		<%
 		} else {

@@ -33,6 +33,9 @@ try {
 
 }
 %>
+<%
+
+%>
 
 
 <!DOCTYPE html>
@@ -227,7 +230,7 @@ output .span--hidden {
 		<%
 		if (level == 2 || level == 1) {
 		%>
-		<a href="${pageContext.request.contextPath}/loadorder">สั่งอาหาร</a>
+		<a href="${pageContext.request.contextPath}/loadorder">ประวัติสั่งอาหาร</a>
 		<%
 		}
 		%>
@@ -241,7 +244,7 @@ output .span--hidden {
 		%>
 		</div>
 		<div style="text-align: right;">
-		<a href="${pageContext.request.contextPath}/loadeditProfile">แก้ไขข้อมูล</a>
+		<a href="${pageContext.request.contextPath}/loadsoeditmem">แก้ไขข้อมูล</a>
 		<%
 		if (level == 1) {
 		%>
@@ -269,18 +272,22 @@ output .span--hidden {
 			<img class="image-preview" src="./img/<%=memFeature.getMemImageProfile()%>" alt="" /> 
 				<label for="image">รูปโปรไฟล์ :</label>
 				<input type="file" name="profile_pic" id="imgs" accept="img/jpeg, img/png, img/jpg" value="<%=memFeature.getMemImageProfile() %>" />
+				<label for="image">รหัสผู้ใช้ :</label>
+				<input type="text" placeholder="รหัสผู่้ช้ *" value="<%=memFeature.getMemID()%>" name="memID" id="memID" readonly/>
+				
 				<label for="image">ชื่อ :</label>
-				<input type="text" placeholder="ชื่อ *" value="<%=memFeature.getMemName()%>" name="name" id="name" readonly/>
+				<input type="text" placeholder="ชื่อ *" value="<%=memFeature.getMemName()%>" name="memName" id="memName" readonly/>
 				<label for="email">อีเมล :</label>
-				<input type="text" placeholder="Email *" value="<%=memFeature.getMemEmail()%>" name="email" id="email" readonly/>
+				<input type="text" placeholder="Email *" value="<%=memFeature.getMemEmail()%>" name="memEmail" id="memEmail" readonly/>
 				<label for="adds">ที่อยู่ :</label>
-				<textarea name="adds" rows="4" cols="50" placeholder="ที่อยู่ *" id="adds"> <%=memFeature.getMemAddress()%></textarea>
+				<textarea name="memaddress" rows="4" cols="50" placeholder="ที่อยู่ *" id="memaddress"> <%=memFeature.getMemAddress()%></textarea>
 				<label for="phone">เบอร์โทรศัพท์ :</label>
-				<input type="text" minlength="10" maxlength="10" name="phone" placeholder="เบอร์โทรศัพท์ *" id="phone" value="<%=memFeature.getMemPhone()%>" readonly/>
+				<input type="text" minlength="10" maxlength="10" name="memPhone" placeholder="เบอร์โทรศัพท์ *" id="memPhone" value="<%=memFeature.getMemPhone()%>" readonly/>
 				<label for="feature">สถานะ :</label>
-				<%=memFeature.getMemFeature()%>
+				<input type="text"  name="memFeature" placeholder="ระดับชั้นผู้ให้ *" id="memFeature" value="<%=memFeature.getMemFeature()%>" readonly/>
 				<label for="password">รหัสผ่าน :</label>
 				<input type="password" name="password" value="<%=memFeature.getPassword()%>" id="password" placeholder="password" readonly>
+				
 		
 		<div>
 			<input type="submit" value="บันทึก"

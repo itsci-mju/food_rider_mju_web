@@ -62,6 +62,13 @@ public class LoginController {
 	public String loadregisterPage() {
 		return "register";
 	}
+	@RequestMapping(value = "/loadsoeditmem", method = RequestMethod.GET)
+	public String loadsoeditmemPage(HttpServletRequest request, HttpSession session) {
+		LoginManager sm = new LoginManager();
+		List<Member> st = sm.ShowUSERS();
+		session.setAttribute("st", st);
+		return "editProfile";
+	}
 
 	@RequestMapping(value = "/mregister", method = RequestMethod.POST)
 	public ModelAndView do_register(HttpServletRequest request, HttpSession session) {
@@ -96,6 +103,7 @@ public class LoginController {
 				erorr = lm.insertMember(m);
 				String path = request.getSession().getServletContext().getRealPath("/") + "//images//";
 				data.get(0).write(new File(path + File.separator + imgname2));
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				erorr = -1;
@@ -105,30 +113,60 @@ public class LoginController {
 		}
 		return mav;
 	}
-
-	@RequestMapping(value = "/loadeditProfile", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/loadeditProfile", method = RequestMethod.POST)
 	public ModelAndView getProfiles(HttpServletRequest request, Model md, HttpSession session) {
+		System.out.println("error 5555 ");
 		int erorr = 0;
 		ModelAndView mav = new ModelAndView("editProfile");
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
-				request.setCharacterEncoding("UTF-8");
+				List<FileItem> data = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 				
-				String memName = request.getParameter("memName");
-				String memEmail = request.getParameter("memEmail");
-				String memaddress = request.getParameter("memaddress");
-				String memPhone = request.getParameter("memPhone");
-				String memFeature = request.getParameter("memFeature");
-				String memImageProfile =request.getParameter("memImageProfile");
-				String password = request.getParameter("password");
-				String status =request.getParameter("status");
+				String memImageProfile = new File(data.get(0).getName()).getName();
+				String memID = new String(data.get(1).get(), StandardCharsets.UTF_8);
+				int id = Integer.parseInt(memID);
+				String memName = new String(data.get(2).get(), StandardCharsets.UTF_8);
+
+				String memEmail = new String(data.get(3).get(), StandardCharsets.UTF_8);
+
+				String memaddress = new String(data.get(4).get(), StandardCharsets.UTF_8);
+
+				String memPhone = new String(data.get(5).get(), StandardCharsets.UTF_8);
+
+				String memFeature = new String(data.get(6).get(), StandardCharsets.UTF_8);
+
+				String password = new String(data.get(7).get(), StandardCharsets.UTF_8);
+				String imgname2;
+				if(memImageProfile == "") {
+					imgname2 = "1.jpg";
+				}else {
+					String imgname = memImageProfile.split("\\.")[1];
+					imgname2 = memID + "." + imgname;
+				}
+				
+				
+				
+				
 				LoginManager lm = new LoginManager();
-				int ma = lm.getMaxMember();
-				String s = String.valueOf(ma);
 				
-				Member mr = new Member(ma + 1, memName , memEmail,memaddress,memPhone , memFeature, memImageProfile,
-						password, status);
+				System.out.println(id);
+				System.out.println(memName);
+				System.out.println(memEmail);
+				System.out.println(memaddress);
+				System.out.println(memPhone);
+				System.out.println(memFeature);
+				System.out.println(imgname2);
+				System.out.println(password);
+				
+				
+			
+				
+				Member mr = new Member(id, memName ,memPhone , memEmail,memaddress, memFeature, imgname2,
+						password,null);
 				erorr = lm.EditProfile(mr);
+				Member st = lm.SMembers(memID);
+				session.setAttribute("Customer", st);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -140,6 +178,7 @@ public class LoginController {
 		}
 		return mav;
 	}
+	
 	@RequestMapping(value = "/loaddelMember", method = RequestMethod.GET)
 	public String loadrdelMemberPage(HttpSession session, HttpServletRequest request) {
 		LoginManager sm = new LoginManager();
@@ -224,17 +263,19 @@ public class LoginController {
 	}*/
 	@RequestMapping (value="/resPostupdate",method=RequestMethod.GET)
 	public String resPostupdate(HttpSession session , HttpServletRequest  request) {
+		System.out.println("55666666");
 		LoginManager DM = new LoginManager();
 		String memID = request.getParameter("memID");
-		String memName = request.getParameter("memName");
-		String Status = request.getParameter("Status");
+		String Status = request.getParameter("status");
 		
-	int st = DM.updatestatus(memID,memName,Status);
-	
-	List<Member>mem = DM.SearchMember(memName);
-	session.setAttribute("mem1",mem);
+		int st = DM.updatestatus(memID,Status);
+			
+		List<Member>mem = DM.ShowUSERS();
+		request.setAttribute("errorListMember",st);
+		session.setAttribute("st", mem);
 	
 	return "listMember";
 	}
+	
 	
 }
